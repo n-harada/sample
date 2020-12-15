@@ -1,0 +1,152 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+  
+  <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+  <script src="static/jquery.min.js"></script>
+  <script src="https://riversun.github.io/jsframe/jsframe.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+  
+  
+  </head>
+  <body>
+    <div id="navArea">
+
+      <nav>
+        <div class="inner">
+          <ul>
+            <li><a href="#">チュートリアル</a></li>
+            <li><a href="#">設定</a></li>
+            <li><a href="#">ログアウト</a></li>
+          </ul>
+        </div>
+      </nav>
+    
+      <div class="toggle_btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    
+      <div id="mask"></div>
+    
+    </div>
+  
+
+   
+    <div class="index modal">
+    <form method="post" action="/result" enctype="multipart/form-data" class="index">
+      <!-- <div>処方箋画像のアップロード</div> -->
+      <img class="front-image"src="static/logo2.png"></img>
+      <label>
+
+      <div class="btn btn-4 btn-size">処方箋を撮影</div>
+      <input type="file" name="file" size="30" class="index " id="prescImage"> 
+      </label>
+      
+      
+      
+      
+      <div>
+      <button type="submit" formmethod="POST" onclick="start()" class="btn btn-4" id="prescSend"　>送信</button>
+      </div>
+    </form>
+    <p style="color: gray;">@　mediLab. Inc</p>
+    </div>
+
+    <footeer>
+      
+      </footeer>
+
+    <!-- <div class="logo-rotation">
+  </div>
+     -->
+  
+     
+
+<script>
+  function start(){
+  const jsFrame = new JSFrame();
+  const align = 'CENTER_CENTER';//アンカー
+
+
+//(x,y)座標として画面の中央を指定、基準点（アンカー）をウィンドウの水平垂直の中心(CENTER_CENTER)にセット
+  const x = window.innerWidth / 2;
+  const y = window.innerHeight / 2;
+
+//プリセットアピアランスをプリセット名で指定する
+const frame01 = jsFrame.create({
+    width: 450,//幅
+    height: 700,//高さ
+    title: 'Yosemite style',
+    appearanceName: 'popup',
+    style: {
+        backgroundColor: 'rgba(225,225,225)',
+    },
+    closeButton: false,
+    url: 'wait'
+
+})
+frame01.showModal();
+frame01.setPosition(x, y, align);
+
+}
+
+
+$(function(){
+ 
+ //ファイルチェック
+ function inputCheck(){
+  
+   //inputフィールドの文字数を取得
+   fileCheck = $("#prescImage").val().length;
+   
+   //値が無ければボタンを非表示
+   if(fileCheck == 0){
+     $("#prescSend").attr("disabled","disabled");
+   }else{
+     $("#prescSend").attr("disabled",false);
+   }
+ }
+  
+   //フォームの中身を検証
+   inputCheck();
+   
+   //inputフィールドの値が変わったら
+   $("#prescImage").change(function(){
+     inputCheck();
+   });
+  
+ });
+  
+ var $nav   = $('#navArea');
+  var $btn   = $('.toggle_btn');
+  var $mask  = $('#mask');
+  var open   = 'open'; // class
+  // menu open close
+
+  $btn.on( 'click', function() {
+    console.log("クリック");
+    if (!$nav.hasClass( open ) ) {
+      console.log("open");
+      $nav.addClass( open );
+    } else {
+      console.log("close");
+      $nav.removeClass( open );
+    }
+  });
+  // mask close
+  $mask.on('click', function() {
+    $nav.removeClass( open );
+  });
+
+
+//ウィンドウを表示する
+
+
+
+</script>
+  </body>
+</html>

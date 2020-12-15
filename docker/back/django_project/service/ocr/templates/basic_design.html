@@ -1,0 +1,268 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+  
+  <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+  <script src="static/jquery.min.js"></script>
+  <script src="https://riversun.github.io/jsframe/jsframe.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+  
+  
+  </head>
+  <body>
+    <div id="navArea">
+
+      <nav>
+        <div class="inner">
+          <ul>
+            <li><a href="#">チュートリアル</a></li>
+            <li><a href="#">設定</a></li>
+            <li><a href="#">ログアウト</a></li>
+          </ul>
+        </div>
+      </nav>
+    
+      <div class="toggle_btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    
+      <div id="mask"></div>
+    
+    </div>
+
+
+    <!--ここから-->
+    <style>
+.thumbnail{
+    margin:0 5px 5px 0;
+    max-width:160px;
+    vertical-align:bottom;
+}
+</style>
+
+<div class="index modal" style="padding-bottom: 150px;position: relative;box-sizing: border-box;min-height: 100vh;">
+
+<div style="position: absolute;transform: translateY(-50%) translateX(-50%);top: 50%;left: 50%;width:100%">
+<img class="front-image"src="static/logo2.png">
+
+<!--
+<form method="get" action="/camera" style="text-align:center;">
+  <div>
+  <button class="tuika btn btn-4" type="submit" formmethod="get" >撮影</button>
+  </div>
+</form>
+-->
+
+<form method="post" action="/result1" enctype="multipart/form-data" class="index">
+    <table>
+        <thead>
+        <tr>
+       
+        <th></th>
+        </tr>
+        </thead>
+        <tbody class="row-parent　mock">
+        <tr class="thumbBox mock">
+            
+            <td class="center"　style="margin-bottom: 3em;">　
+                <div id="view_1"></div>
+                <label class="tuika btn btn-4">
+                　　　　撮影　　　　
+                <input class="hide" type="file" id="file_1" name="img[]" accept="image/*">
+                </label>
+            </td>
+        </tr>
+
+        </tbody>
+
+        
+        <!-- <tfoot class="mock">
+        <tr>
+            <td>
+                <button class="btn btn-4" id="add" type="button">追加</button><span id="reload"></span>
+            </td>
+        </tr>
+        </tfoot> -->
+    </table>
+    <span id="message"></span>
+   
+    <button type="submit" formmethod="POST" onclick="start()" class="tuika btn btn-4" id="prescSend">送信</button>
+    <div>
+      
+      </div>
+    </form>    
+
+    <script>
+      function start(){
+        $('.mock').hide();
+  const jsFrame = new JSFrame();
+  const align = 'CENTER_CENTER';//アンカー
+
+
+//(x,y)座標として画面の中央を指定、基準点（アンカー）をウィンドウの水平垂直の中心(CENTER_CENTER)にセット
+  const x = window.innerWidth / 2;
+  const y = window.innerHeight / 2;
+
+//プリセットアピアランスをプリセット名で指定する
+const frame01 = jsFrame.create({
+    width: 450,//幅
+    height: 700,//高さ
+    title: 'Yosemite style',
+    appearanceName: 'popup',
+    style: {
+        backgroundColor: 'rgba(225,225,225)',
+    },
+    closeButton: false,
+    url: 'wait'
+
+});
+frame01.showModal();
+frame01.setPosition(x, y, align);
+
+}
+      </script>
+    
+
+
+<p style="color:brown; font-size: 30px;"><a href="https://medilab.co.jp/for_test/">サンプル処方箋</a>でお試しください。<br><span style="font-size:25px;">(※ 個人情報保護の観点から本ページはサンプル処方箋以外の<br>処方箋には対応しておりません。)</span>
+</p>
+
+
+
+</div>
+<!--
+<p style="color: gray;font-size:30px;bottom: 0px;position: absolute;left: 50%;transform: translateX(-50%);">@　mediLab. Inc</p>
+-->
+</div>
+    <!--ここまで-->
+  
+
+
+    <!-- <div class="logo-rotation">
+  </div>
+     -->
+  
+     
+
+<script>
+  // $('<div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>').prependTo('.thumbBox');
+
+
+$(function(){
+
+var fileCheck =0;
+        var num = 1;
+        var view_count = document.querySelectorAll("div[id]").length;
+ 
+        function imgView(n) {
+            var reader = new FileReader();
+            document.getElementById('file_' + n).onchange = function (e) {
+                reader.addEventListener('load', function (e) {
+                    $('#view_' + n).html('<img class="thumbnail" src="' + e.target.result + '" />');
+                    fileCheck ++
+                    inputCheck();
+
+                });
+                reader.readAsDataURL(this.files[0]);
+            }
+
+ 
+        }
+ 
+        imgView(num);
+ 
+        $('button#add').click(function () {
+ 
+          if(view_count ===10 ){
+              $('#message').html('※ 追加フォームは' + view_count + 'つまでです。<br>');
+            }else{
+ 
+            num = num + 1;
+            view_count = view_count + 1;
+ 
+              var tr_form = '' +
+                  '<tr class="thumbBox">' +
+                  '<div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>'+
+                  
+                  '<td class="center"><div  id="view_' + num + '"></div><label class="pic btn-4">写真を撮影<input type="file" class="hide" id="file_' + num + '" name="img[]" accept="image/*" /></label></td>' +
+                  '</tr>';
+              $(tr_form).appendTo($('table > tbody'));
+            
+              $('.RemoveButton').remove();
+              $('<div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>').prependTo('.thumbBox');
+              
+              imgView(num);
+          }
+        });
+
+
+
+
+
+
+ 
+ //ファイルチェック
+ function inputCheck(){
+  
+  var fileCheck = $('.thumbnail').length;
+            console.log(fileCheck);
+   
+            if(fileCheck == 0){
+              $("#prescSend").attr("disabled",true);
+            }
+            else if(fileCheck >= 0){
+              console.log("fileCheck");
+              $("#prescSend").attr("disabled",false);
+        }
+  
+ }
+  
+   //フォームの中身を検証
+   inputCheck();
+
+   $(document).on("click", ".RemoveButton", function(){
+     console.log("remove");
+    $(this).parents('.thumbBox').remove();
+});
+
+   function removeButton(){
+    $(this).parents('thumbBox').remove();
+   }
+   
+  
+ });
+  
+ var $nav   = $('#navArea');
+  var $btn   = $('.toggle_btn');
+  var $mask  = $('#mask');
+  var open   = 'open'; // class
+  // menu open close
+
+  $btn.on( 'click', function() {
+    console.log("クリック");
+    if (!$nav.hasClass( open ) ) {
+      console.log("open");
+      $nav.addClass( open );
+    } else {
+      console.log("close");
+      $nav.removeClass( open );
+    }
+  });
+  // mask close
+  $mask.on('click', function() {
+    $nav.removeClass( open );
+  });
+
+
+//ウィンドウを表示する
+
+
+
+
+</script>
+  </body>
+</html>

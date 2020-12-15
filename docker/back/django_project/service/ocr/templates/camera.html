@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <title>Camera Test</title>
+
+   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
+   <script src="https://riversun.github.io/jsframe/jsframe.js"></script>
+</head>
+<body>
+
+<div class="command-top">
+  <button type="button" id="again"><i class="fas fa-arrow-left white"></i></button>
+  
+</div>
+
+<div class="parent">
+<div class="before-shutter child"><video id="camera" width="500" height="700"></video></div>
+<div class="before-shutter child frame"><img src="static/frame.png"></img></div>
+</div>
+
+<div class="after-shutter"><canvas id="picture" width="500" height="700"></canvas></div>
+
+<form class="command-area">
+  <button type="button" id="shutter"><i class="fas fa-camera"></i></button>
+  
+  <button type="button" onclick="send_img()">送信</button>
+</form>
+
+<form method="post" action="/result1" style="text-align:center;">
+  <div>
+  <button type="submit" formmethod="get" >camera</button>
+  </div>
+</form>
+
+
+
+
+<audio id="se" preload="auto">
+  <!-- <source src="camera-shutter1.mp3" type="audio/mp3"> -->
+</audio>
+
+
+<script>
+window.onload = () => {
+  const video  = document.querySelector("#camera");
+  const canvas = document.querySelector("#picture");
+  const se     = document.querySelector('#se');
+
+  /** カメラ設定 */
+  const constraints = {
+    audio: false,
+    video: {
+      width: 500,
+      height: 700,
+      facingMode: "user"   // フロントカメラを利用する
+      // facingMode: { exact: "environment" }  // リアカメラを利用する場合
+    }
+  };
+
+  /**
+   * カメラを<video>と同期
+   */
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then( (stream) => {
+    video.srcObject = stream;
+    video.onloadedmetadata = (e) => {
+      video.play();
+    };
+  })
+  .catch( (err) => {
+    console.log(err.name + ": " + err.message);
+  });
+
+  /**
+   * シャッターボタン
+   */
+   document.querySelector("#shutter").addEventListener("click", () => {
+    const ctx = canvas.getContext("2d");
+
+    // 演出的な目的で一度映像を止めてSEを再生する
+    video.pause();  // 映像を停止
+    se.play();      // シャッター音
+    setTimeout( () => {
+      video.play();    // 0.5秒後にカメラ再開
+    }, 500);
+
+    // canvasに画像を貼り付ける
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    $('.after-shutter').show();
+    $('.before-shutter').hide();
+    $('#shutter').hide();
+    $('#again').show();
+    $('#submit-pic').show();
+
+
+  });
+  document.querySelector("#again").addEventListener("click", () => {
+    $('.after-shutter').hide();
+    $('.before-shutter').show();
+    $('#shutter').show();
+    $('#again').hide();
+    $('#submit-pic').hide();
+    
+
+  });
+
+    //---------------------------------------------
+  // 保存ボタンが押されたらサーバへ送信する
+  //---------------------------------------------
+  document.querySelector("#submit-pic").addEventListener("click", ()=>{
+    // Canvasのデータを取得
+    console.log("send");
+    const board = document.querySelector("#picture");
+    const canvas = board.toDataURL("image/png");  // DataURI Schemaが返却される
+
+    // 送信情報の設定
+    const param  = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({data: canvas})
+    };
+
+    // サーバへ送信
+    sendServer('/result1', param);
+  });
+
+  /**
+ * サーバへJSON送信
+ *
+ * @param url   {string} 送信先URL
+ * @param param {object} fetchオプション
+ */
+function sendServer(url, param){
+  fetch(url, param)
+    .then((response)=>{
+      return response.json();
+    })
+    .then((json)=>{
+      if(json.status){
+        alert("送信に『成功』しました");
+        setImage(json.result);    //json.resultにはファイル名が入っている
+      }
+      else{
+        alert("送信に『失敗』しました");
+        console.log(`[error1] ${json.result}`);
+      }
+    })
+    .catch((error)=>{
+      alert("送信に『失敗』しました");
+      console.log(`[error2] ${error}`);
+    });
+}
+
+
+
+
+
+};
+
+function send_img(){
+
+        
+
+        //canvas elementを取得
+        var canvas = document.getElementById('picture');
+        //base64データを取得（エンコード）
+        var base64 = canvas.toDataURL('image/png');
+
+        var fData = new FormData();
+        fData.append('img', base64);
+
+        // #ajax送信
+        $.ajax({
+            //画像処理サーバーに返す場合
+            url: 'http://127.0.0.1:5000/cameraresult',   
+            type: 'POST',
+            data: fData ,
+            contentType: false,
+            processData: false,
+            success: function(data, dataType) {
+                start();
+                // window.location.href = "http://127.0.0.1:5000/cameraresult";
+                //非同期で通信成功時に読み出される [200 OK 時]
+                console.log('Success', data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //非同期で通信失敗時に読み出される
+                console.log('Error : ' + errorThrown);
+            }
+        });
+        
+    }
+  function start(){
+  const jsFrame = new JSFrame();
+  const align = 'CENTER_CENTER';//アンカー
+
+
+//(x,y)座標として画面の中央を指定、基準点（アンカー）をウィンドウの水平垂直の中心(CENTER_CENTER)にセット
+  const x = window.innerWidth / 2;
+  const y = window.innerHeight / 2;
+
+//プリセットアピアランスをプリセット名で指定する
+const frame01 = jsFrame.create({
+    width: 450,//幅
+    height: 700,//高さ
+    title: 'Yosemite style',
+    appearanceName: 'popup',
+    style: {
+        backgroundColor: 'rgba(225,225,225)',
+    },
+    closeButton: false,
+    url: 'wait'
+
+});
+frame01.showModal();
+frame01.setPosition(x, y, align);
+
+}
+
+
+
+$('.after-shutter').hide();
+$('#again').hide();
+$('#submit-pic').hide();
+
+</script>
+
+<style>
+
+    .parent{
+        position: relative;
+        z-index: 0;
+        margin: 0;
+        padding: 0;
+        margin: auto;
+
+    }
+    .child{
+        position: absolute;
+        top: 0;
+        /* left: 100px; */
+        z-index: 1;
+        
+    }
+    .frame img{
+        width: 500px;
+        height: 700px;
+
+    }
+    .command-area{
+        background-color: rgb(8, 8, 8);
+        width: 500px;
+        height: 80px;
+        position: absolute;
+        top: 700px;
+        /* left: 100px; */
+        z-index: 2;
+    }
+    #shutter{
+        margin: 15px 42%;
+        padding: 10px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 50%;
+    }
+    .fa-camera{
+        font-size: 30px;
+    }
+    #again{
+        margin-top: 10px;
+        background-color: rgb(8, 8, 8);
+        color: rgb(201, 79, 79);
+        font-weight: 250;
+        border: none;
+        width: 50px;
+        font-size: 30px;
+    }
+    #submit-pic{
+        margin: 20px 20% 5px 10%;
+        background-color: rgb(48, 48, 48);
+        color: rgb(88, 109, 228);
+        font-weight: 250;
+        border: none;
+        width: 100px;
+        font-size: 20px;
+    }
+    .command-top{
+      background-color: rgb(8, 8, 8);
+      width: 500px;
+      height: 60px;
+
+    }
+    .white{
+      color: white;
+      font-size: 20px;
+    }
+    
+</style>
+</body>
+
+</html>

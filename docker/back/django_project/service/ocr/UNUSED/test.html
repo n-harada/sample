@@ -1,0 +1,45 @@
+<head>
+<script src="static/jquery.fs.zoomer.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src="static/pinch-zoom.js"></script>
+</head>
+<body>
+<div style="overflow: hidden;width:100%;">
+  <div class=prescription_image style="float:left;width:50%;">
+  
+  <img class=prescription src= "./uploads/input_data.png" id="image1"/>
+
+<!--
+  <script>
+  $(document).ready(function() {
+    $(".prescription_image").zoomer();
+  });
+  </script>
+  -->
+
+
+<!--
+  <script>
+  $(document).ready(function() {
+    $(".prescription_image").zoomer();
+  }, { passive: true }
+  );
+  </script>
+-->
+<script>
+let el = document.querySelector('#prescription_image');
+let pz = new PinchZoom(el, options);
+</script>
+
+  </div>
+
+
+  
+  </div>
+
+  <div class="user_input" style="float:right;width:50%;">
+  asdfasf
+  </div>
+</div>
+</body>

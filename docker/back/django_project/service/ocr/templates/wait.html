@@ -1,0 +1,160 @@
+	
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Progressbarウィジェット</title>
+<link type="text/css" rel="stylesheet"
+  href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />
+<script type="text/javascript"
+  src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript"
+  src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+  <script src="https://riversun.github.io/jsframe/jsframe.js"></script>
+ 
+  <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+ 
+
+
+</head>
+<body>
+<div class="modal">
+  <div class="modal-design">
+    <h3>送信中です・・・</h3>
+
+<h1 id="count-down" style="margin-top: 1em;">5</h1>
+
+<div class="flexBox">
+  <div id="one" class="loading">
+  </div>
+  <div id="two" class="loading">
+  </div>
+  <div id="three" class="loading">
+  </div>
+  <div id="four" class="loading">
+  </div>
+  <div id="five" class="loading">
+  </div>
+</div>
+
+
+<div class="tips">
+  <h5>新薬・新製品情報</h5>
+  <p id="tipsTitle"></p>
+  <p id="tips"></p>
+</div>
+</div>
+</div>
+<script>
+
+
+  var data = [
+ {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤          「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    },
+    {
+      "code": "G-021",
+      "title": "大杉製薬　FCエキス錠シリーズ　苓桂朮甘湯を新発売",
+      "name": "医療用漢方製剤としての錠剤はこれまでに例がなく、服用しやすく、漢方薬の味やにおいが苦手な患者にも提供できるようになります。",
+      "price": 100
+    },
+    {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    },
+    {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    },
+    {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    }
+];
+
+
+
+  var count = 0;
+  function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+const tipsShow = function(){
+  $('#tipsTitle').append(data[getRandomInt(5)].title).hide().fadeIn(1000);
+  $('#tips').append(data[getRandomInt(5)].name).hide().fadeIn(1000);
+
+
+  }
+  
+
+
+// console.log(getRandomInt(2))
+  var countup = function(){
+    count++;
+    if(count == 1){
+   
+      $('#count-down').text("5");
+      console.log("処方箋画像を送信中....");
+      $('#two').addClass("gray");
+
+      tipsShow();
+      
+      
+
+    }
+    else if(count == 2){
+      $('#count-down').text("4");
+      console.log("文字起こし中...");
+      $('#two').removeClass("gray");
+      $('#three').addClass("gray");
+
+    }
+    else if(count == 3){
+      $('#count-down').text("3");
+      console.log("医薬品リストと照合中...");
+      $('#three').removeClass("gray");
+      $('#four').addClass("gray");
+
+    }
+    else if(count == 4){
+      $('#count-down').text("2");
+      console.log("処方箋リストの生成中...");
+      $('#four').removeClass("gray");
+      
+      $('#two').addClass("gray");
+      $('#three').addClass("gray");
+      $('#four').addClass("gray");
+   
+
+    }
+    else if(count == 5){
+      $('#count-down').text("1");
+      console.log("処方箋リストの生成中...");
+    
+        $('#two').removeClass("gray");
+        $('#three').removeClass("gray");
+        $('#four').removeClass("gray");
+
+      
+
+
+    }
+
+    setTimeout(countup, 1000);
+  } 
+  countup();
+
+</script>
+</body>
+
+
+</html> 
+
