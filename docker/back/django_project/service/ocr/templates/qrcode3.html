@@ -1,0 +1,376 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+
+    <style>
+    @media screen and (max-width: 700px) { 
+      .info_base2{
+        display:None;
+      }
+      .info_med2{
+        display:None;
+      }
+    }
+    @media screen and (min-width: 700px) { 
+      .info_base{
+        display:None;
+      }
+      .info_med{
+        display:None;
+      }
+    }
+    
+    </style>
+  </head>
+
+  <body>
+  
+
+ 
+
+{% if val==1  %} 
+  <div class="info_base"> <!--スマホ用--> 
+  <div style="font-weight:bold;">患者様情報</div>
+  <div style="font-size:40px;">
+      <p><span style="font-size:15px;">　保険者番号:</span><span style="font-size:25px;">138271</span><br><span style="font-size:15px;">　記号番号:　</span><span style="font-size:25px;">27ｰ18・9796</span><br><span style="color:blue;font-size:15px">　印鑑が検出出来ませんでした。ご確認ください。</span></p>
+      
+  </div><br>
+  </div>
+
+  <div class="info_base2"> <!--ipad用--> 
+  <div style="text-align:center;">
+  <div style="font-weight:bold;font-size:35px; ">患者様情報</div>
+  <div style="font-size:40px;">
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　保険者番号:</span><span style="font-size:25px;">138271</span></div>
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　記号番号:　</span><span style="font-size:23px;">27ｰ18・9796</span></div>
+      <div><span style="color:blue;font-size:15px;">印鑑が検出出来ませんでした。ご確認ください。</span></div>
+  </div><br>
+  </div>
+  </div>
+
+
+  <div class="info_med"><!--スマホ用-->
+  <div style="font-weight:bold;">医薬品情報</div>
+
+  <div style="font-size:14px;">
+
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP1.　【般】メキタジン錠3mg<br>
+	　　　　 分２　朝・夕食後服用</div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span style="color:blue;">　未取得</span></div>
+  </div>
+  <br>
+
+  
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　トランサミン錠250mg<br>
+	　　　　 アスペリン錠20 20mg<br>
+  　　　　 分３　毎食後服用
+  </div>
+  <div style="width:15%;display: inline-block;">
+  3錠<br>
+  3錠<br>
+  　5日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP3.　カロナール錠200 200mg<br>
+	<span style="color:blue;">　　　　 用法未取得</span></div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span>　3回分</span></div>
+  </div>
+  </div>
+  </div>
+
+
+
+
+
+  <div class="info_med2"><!--ipad用-->
+  <div style="font-weight:bold;text-align:center;font-size:35px;">医薬品情報</div><br>
+
+  <div style="font-size:14px; width:50%;margin-left:auto;margin-right:auto;text-align:left;">
+
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP1.　【般】メキタジン錠3mg<br>
+	　　　　 分２　朝・夕食後服用</div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span style="color:blue;">　未取得</span></div>
+  </div>
+  <br>
+
+  
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　トランサミン錠250mg<br>
+	　　　　 アスペリン錠20 20mg<br>
+  　　　　 分３　毎食後服用
+  </div>
+  <div style="width:15%;display: inline-block;">
+  3錠<br>
+  3錠<br>
+  　5日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP3.　カロナール錠200 200mg<br>
+	<span style="color:blue;">　　　　 用法未取得</span></div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span>　3回分</span></div>
+  </div>
+  </div>
+  </div>
+
+
+  <div style="font-size:12px;">
+  <div style="text-align: right;color:blue;">
+  　　　　　　　　青字: 読取が不確かなため、<br>
+  　　　　　　　　ご確認いただければ幸いです。
+  </div>
+
+  </div>
+  
+  
+  
+  <div class="qrcode">
+      <!--<img src={{path1}} />-->
+      <img class="img_qrcode" src='/uploads/images/accurate_qrcode.png' />
+      <!--
+      <img src={{path1}} style="margin-top: 10px; vertical-align: bottom; width: 200px;margin-left: auto;margin-right: auto;"/>
+      <img src={{path1}} style="width=80%;margin-left: auto;margin-right: auto;"/>
+      -->
+
+  </div>
+{% endif %}
+
+{% if val==2  %} 
+  <div class="info_base"> <!--スマホ用--> 
+  <div style="font-weight:bold;">患者様情報</div>
+  <div style="font-size:40px;">
+      <p><span style="font-size:15px;">　保険者番号:</span><span style="font-size:25px;">138271</span><br><span style="font-size:15px;">　記号番号:　</span><span style="font-size:25px;">27ｰ18・9796</span></p>
+      
+  </div><br>
+  </div>
+
+  <div class="info_base2"> <!--ipad用--> 
+  <div style="text-align:center;">
+  <div style="font-weight:bold;font-size:35px; ">患者様情報</div>
+  <div style="font-size:40px;">
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　保険者番号:</span><span style="font-size:25px;">138271</span></div>
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　記号番号:　</span><span style="font-size:23px;">27ｰ18・9796</span></div>
+  
+  </div><br>
+  </div>
+  </div>
+
+
+
+  <div class="info_med"><!--スマホ用-->
+  <div style="font-weight:bold;">医薬品情報</div>
+
+  <div style="font-size:14px;">
+
+  
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP1.　リフレックス錠15mg<br>
+	　　　　 <span style="color:blue;">未取得</span><br>
+  　　　　 分1　夕食後
+  </div>
+  <div style="width:15%;display: inline-block;">
+  0.5錠<br>
+  0.26mg<br>
+  　28日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　ロゼレム錠8mg<br>
+	<span>　　　　 分1就寝前</span></div>
+  <div style="width:15%;display: inline-block;">
+  0.5錠<br>
+  <span>　<span style="color:blue;">未取得</span></span></div>
+  </div>
+  </div>
+  </div>
+
+
+
+
+
+  <div class="info_med2"><!--ipad用-->
+  <div style="font-weight:bold;text-align:center;font-size:35px;">医薬品情報</div><br>
+
+  <div style="font-size:14px; width:50%;margin-left:auto;margin-right:auto;text-align:left;">
+
+  
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP1.　リフレックス錠15mg<br>
+	　　　　 <span style="color:blue;">未取得</span><br>
+  　　　　 分1　夕食後
+  </div>
+  <div style="width:15%;display: inline-block;">
+  0.5錠<br>
+  0.26mg<br>
+  　28日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　ロゼレム錠8mg<br>
+	<span>　　　　 分1就寝前</span></div>
+  <div style="width:15%;display: inline-block;">
+  0.5錠<br>
+  <span>　<span style="color:blue;">未取得</span></span></div>
+  </div>
+  </div>
+  </div>
+
+
+  <div style="font-size:12px;">
+  <div style="text-align: right;color:blue;">
+  　　　　　　　　青字: 読取が不確かなため、<br>
+  　　　　　　　　ご確認いただければ幸いです。
+  </div>
+
+  </div>
+  
+  
+  
+  <div class="qrcode">
+      <!--<img src={{path1}} />-->
+      <img class="img_qrcode" src='/uploads/images/accurate_qrcode2.png' />
+      <!--
+      <img src={{path1}} style="margin-top: 10px; vertical-align: bottom; width: 200px;margin-left: auto;margin-right: auto;"/>
+      <img src={{path1}} style="width=80%;margin-left: auto;margin-right: auto;"/>
+      -->
+
+  </div>
+{% endif %}
+
+{% if val==3  %} 
+  <div class="info_base"> <!--スマホ用--> 
+  <div style="font-weight:bold;">患者様情報</div>
+  <div style="font-size:40px;">
+      <p><span style="font-size:15px;">　保険者番号:</span><span style="font-size:25px;"><span style="color:blue;">未取得</span></span><br><span style="font-size:15px;">　記号番号:　</span><span style="font-size:25px;">27ｰ18・9796</span></p>
+      
+  </div><br>
+  </div>
+
+  <div class="info_base2"> <!--ipad用--> 
+  <div style="text-align:center;">
+  <div style="font-weight:bold;font-size:35px; ">患者様情報</div>
+  <div style="font-size:40px;">
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　保険者番号:</span><span style="font-size:25px;"><span style="color:blue;">未取得</span></span></div>
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　記号番号:　</span><span style="font-size:23px;">27ｰ18・9796</span></div>
+  
+  </div><br>
+  </div>
+  </div>
+
+
+  <div class="info_med"><!--スマホ用-->
+  <div style="font-weight:bold;">医薬品情報</div>
+
+  <div style="font-size:14px;">
+
+  
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP1.　【般】アロプリノール錠100mg<br>
+	　　　　 クレストール錠5mg<br>
+  　　　　 分1.朝食後服用
+  </div>
+  <div style="width:15%;display: inline-block;">
+  1錠<br>
+  1錠<br>
+  　30日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　ミカムロ配合錠AP<br>
+	<span>　　　　 分1.朝食後服用</span></div>
+  <div style="width:15%;display: inline-block;">
+  1錠<br>
+  <span>　30日分</span></div>
+  </div>
+  </div>
+  </div>
+
+
+
+
+
+  <div class="info_med2"><!--ipad用-->
+  <div style="font-weight:bold;text-align:center;font-size:35px;">医薬品情報</div><br>
+
+  <div style="font-size:14px; width:50%;margin-left:auto;margin-right:auto;text-align:left;">
+
+  
+  <div>
+ <div style="width:80%;display: inline-block;">
+  　RP1.　【般】アロプリノール錠100mg<br>
+	　　　　 クレストール錠5mg<br>
+  　　　　 分1.朝食後服用
+  </div>
+  <div style="width:15%;display: inline-block;">
+  1錠<br>
+  1錠<br>
+  　30日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　ミカムロ配合錠AP<br>
+	<span>　　　　 分1.朝食後服用</span></div>
+  <div style="width:15%;display: inline-block;">
+  1錠<br>
+  <span>　30日分</span></div>
+  </div>
+  </div>
+  </div>
+
+
+  <div style="font-size:12px;">
+  <div style="text-align: right;color:blue;">
+  　　　　　　　　青字: 読取が不確かなため、<br>
+  　　　　　　　　ご確認いただければ幸いです。
+  </div>
+
+  </div>
+  
+  
+  
+  <div class="qrcode">
+      <!--<img src={{path1}} />-->
+      <img class="img_qrcode" src='/uploads/images/accurate_qrcode3.png' />
+      <!--
+      <img src={{path1}} style="margin-top: 10px; vertical-align: bottom; width: 200px;margin-left: auto;margin-right: auto;"/>
+      <img src={{path1}} style="width=80%;margin-left: auto;margin-right: auto;"/>
+      -->
+
+  </div>
+{% endif %}
+
+  <form method="get" action="/" style="text-align:center;">
+    <div>
+    <button type="submit" formmethod="get" class="qrcode_button" >最初の画面に戻る</button>
+    </div>
+  </form>
+
+</body>
+</html>

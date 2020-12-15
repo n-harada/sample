@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<!--index.htmlに読み込まれている-->
+<html>
+
+<head>
+    
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="{ {url_for('static', filename='index.css')} }"> -->
+    <link rel="stylesheet" href='{% static "index.css" %}'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <title>ログイン</title>
+    <style type="text/css"> 
+    .cp_iptxt {
+	position: relative;
+	width: 100%;
+	/*margin: 40px 3%;*/
+    text-align:center;
+    }
+    .cp_iptxt input[type=email] {
+        font: 15px/24px sans-serif;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 8px 0;
+        padding: 0.3em;
+        transition: 0.3s;
+        border: 1px solid #1b2538;
+        border-radius: 4px;
+        outline: none;
+        
+    }
+    .cp_iptxt input[type=password] {
+        font: 15px/24px sans-serif;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 8px 0;
+        padding: 0.3em;
+        transition: 0.3s;
+        border: 1px solid #1b2538;
+        border-radius: 4px;
+        outline: none;
+    }
+    .cp_iptxt button{
+        font: 15px/24px sans-serif;
+        font-weight:bold;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 8px 0;
+        padding: 0.3em;
+        transition: 0.3s;
+        border: 1px solid #23AEFF;
+        border-radius: 4px;
+        outline: none;
+        color:white;
+        background-color:#23AEFF;
+        cursor:pointer;
+    }
+    .cp_iptxt input[type=email]:focus {
+        border-color: #8AD4FF;
+
+    }
+    .cp_iptxt input[type=password]:focus {
+        border-color: #8AD4FF;
+    }
+    .cp_iptxt input[type=email] {
+        padding-left: 40px;
+    }
+    .cp_iptxt input[type=password] {
+        padding-left: 40px;
+    }
+    .cp_iptxt i {
+        position: absolute;
+        top: 8px;
+        left: 0;
+        padding: 9px 8px;
+        transition: 0.3s;
+        color: #aaaaaa;
+    }
+    .cp_iptxt input[type=email]:focus + i {
+        color: #8AD4FF;
+    }
+    .cp_iptxt input[type=password]:focus + i {
+        color: #8AD4FF;
+    }
+    .alert_sentence{
+        color:#ff2340;
+    }
+    html{
+        height: 100%;
+    }
+    body {
+    height: 100%;
+    }
+    .input-outbox{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%)translateX(-50%);
+        padding: 10px; 
+        margin-bottom: 10px; 
+        /*border: 1px solid #333333;*/
+        width:300px;
+        text-align:center;
+        border-radius: 10px;"
+    }
+    @media screen and (max-width:639px) { /*スマホ用のcssを記述*/ 
+    .nekorobo-logo{
+        height:30%;
+        display: inline-block;
+    }
+    }
+    @media only screen and (min-width:640px) and (max-width:1023px) { /*tablet用のcssを記述*/ 
+    .nekorobo-logo{
+        height:50%;
+        display: inline-block;
+    }
+    } 
+    @media screen and (min-width:1024px) { /*pc用のcssを記述*/ 
+    .nekorobo-logo{
+        height:80%;
+        display: inline-block;
+    }
+    }
+    </style>
+</head>
+
+<body>
+
+
+    <div style="height:100%;width:100%;">
+    <div class=input-outbox >
+        <form action="" method="POST">
+        {% csrf_token %}
+        <!-- {{ form.as_p }} -->
+        <h1>ログイン</h1>
+        <div class="cp_iptxt" >
+            <input type="email" name="username" placeholder="メールアドレス" autofocus="">
+            <i class="far fa-envelope" aria-hidden="true"></i>
+        </div>
+        <div class="cp_iptxt">
+            <input type="password" name="password" placeholder="パスワード" autofocus="">
+            <i class="fas fa-key" aria-hidden="true"></i>
+        </div>
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+            <p{% if forloop.last %} class="mb-0 alert_sentence" {% endif %}>{{ error }}</p>
+                {% endfor %}
+        </div>
+        {% endif %}
+        <div class="cp_iptxt" >
+        <button style="width:100%;" type="submit">ログイン</button>
+        </div>
+        <br>
+        <!-- <hr>
+        <p>アカウントをお持ちではない場合は<br>こちらから</p>
+        <div class="cp_iptxt">
+        <a href="">新規登録</a>
+        </div> -->
+        </form>
+    </div>
+    </div>
+    <br>
+
+    
+
+
+    
+</body>

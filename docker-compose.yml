@@ -1,0 +1,73 @@
+version: "3"
+
+services:
+  db:
+    container_name: prescription_db
+    build: ./docker/db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+    volumes:
+      - ./docker/db/data:/var/lib/postgresql/data
+
+  storage:
+    container_name: prescription_storage
+    image: minio/minio
+    tty: true
+    environment:
+      - MINIO_ACCESS_KEY=1234
+      - MINIO_SECRET_KEY=12345678
+    command: server /data
+    ports:
+      - 9000:9000
+    volumes:
+      - ./docker/storage/data:/data
+      - ./docker/storage/policies:/policies
+
+  createbucket:
+    container_name: prescription_create_busket
+    image: minio/mc
+    depends_on:
+      - storage
+    volumes:
+      - ./docker/storage/policies:/policies
+    entrypoint: >
+      /bin/sh -c "
+      until (/usr/bin/mc config host add minioAlias http://storage:9000 1234 12345678) do echo '...waiting...' && sleep 1; done;
+      /usr/bin/mc mb minioAlias/prescription;
+      /usr/bin/mc policy set-json /policies/prescription/policy.json minioAlias/prescription;
+      "
+
+  back:
+    container_name: prescription_back
+    build:
+      context: ./
+      dockerfile: ./docker/back/Dockerfile
+    working_dir: "/app/docker/back/django_project"
+    command: >
+      bash -c "
+        echo db:5432:db:user:password > ~/.pgpass &&
+        chmod 600 ~/.pgpass
+        sh ../wait-for-postgres.sh db sh ../init.sh
+        gunicorn config.wsgi:application --timeout 120 --bind 0.0.0.0:8083
+      "
+    tty: true
+    volumes:
+      - ./docker/back:/app/docker/back/
+    expose:
+      - 9000
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+
+  nginx:
+    container_name: prescription_nginx
+    build: ./docker/nginx
+    ports:
+      - 80:80
+    depends_on:
+      - back

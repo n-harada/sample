@@ -1,0 +1,924 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+    <script src="static/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+    <style>
+    @media screen and (max-width: 700px) { 
+      .info_base2{
+        display:None;
+      }
+      .info_med2{
+        display:None;
+      }
+    }
+    @media screen and (min-width: 700px) { 
+      .info_base{
+        display:None;
+      }
+      .info_med{
+        display:None;
+      }
+    }
+    .vague{
+      border: 1px solid blue;
+      background-color: rgb(104, 217, 255);
+    }
+    
+    </style>
+  </head>
+
+  <body>
+  
+  <div class="info_base"> <!--スマホ用--> 
+  <div style="font-weight:bold;">患者様情報</div>
+  <div style="font-size:40px;">
+      <!-- <p><span style="font-size:15px;">　保険者番号:</span><span style="font-size:25px;">{{id_22_insurance_patient_num}}</span><br><span style="font-size:15px;">　記号番号:　</span><span style="font-size:25px;">{{id_23_insurance_card_id}}・{{id_23_insurance_card_num}}</span><br><span style="color:blue;font-size:15px">　印鑑が検出出来ませんでした。ご確認ください。</span></p> -->
+      <p><span style="font-size:15px;">　保険者番号:　</span><input value="{{id_22_insurance_patient_num}}"></input><br><span style="font-size:15px;">　記号番号:　　</span><input value="{{id_23_insurance_card_id}}・{{id_23_insurance_card_num}}"></input><br><span style="color:blue;font-size:15px">　印鑑が検出出来ませんでした。ご確認ください。</span></p>
+  </div><br>
+  </div>
+
+
+  <div class="info_base2"> <!--ipad用--> 
+  <div style="text-align:center;">
+  <div style="font-weight:bold;font-size:35px; ">患者様情報</div>
+  <div class="patientsInfo" style="font-size:40px;">
+      <!-- <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　保険者番号:</span><span style="font-size:25px;">{{id_22_insurance_patient_num}}</span></div> -->
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　保険者番号:</span><input value="{{id_22_insurance_patient_num}}"></input></div>
+      
+      <!-- <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　記号番号:　</span><span style="font-size:23px;">{{id_23_insurance_card_id}}・{{id_23_insurance_card_num}}</span></div> -->
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　記号番号:　</span><input value="{{id_23_insurance_card_id}}・{{id_23_insurance_card_num}}"></input></div>
+      <div><span style="color:blue;font-size:15px;">印鑑が検出出来ませんでした。ご確認ください。</span></div>
+      
+  </div><br>
+  </div>
+
+  </div>
+ 
+
+ 
+  <!--
+  <div style="text-align:center;color:red;">
+  {% if mojibake>0 %}
+    <p>文字化けが{{mojibake}}個あります。レセコンで修正してください。</p>
+  {% endif %}
+  </div>
+  -->
+  <!--
+  {% for result in result_list %}
+    <p style="font-size:10px;">{{ result}}</p>
+  {% endfor %}
+  -->
+  <!-- <div class="info_med">スマホ用 -->
+  <div style="font-weight:bold;">医薬品情報</div>
+
+  <!-- <div style="font-size:14px;">
+
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP1.　【般】メキタジン錠3mg<br>
+	　　　　 分２　朝・夕食後服用</div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span style="color:blue;">　未取得</span></div>
+  </div>
+  <br>
+
+  
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　トランサミン錠250mg<br>
+	　　　　 アスペリン錠20 20mg<br>
+  　　　　 分３　毎食後服用
+  </div>
+  <div style="width:15%;display: inline-block;">
+  3錠<br>
+  3錠<br>
+  　5日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP3.　カロナール錠200 200mg<br>
+	<span style="color:blue;">　　　　 用法未取得</span></div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span>　3回分</span></div>
+  </div>
+  </div>
+  </div> -->
+
+
+
+<!--ipad用-->
+
+  <!-- <div class="info_med2">
+  <div style="font-weight:bold;text-align:center;font-size:35px;">医薬品情報</div><br>
+
+  <div style="font-size:14px; width:50%;margin-left:auto;margin-right:auto;text-align:left;">
+
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP1.　【般】メキタジン錠3mg<br>
+	　　　　 分２　朝・夕食後服用</div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span style="color:blue;">　未取得</span></div>
+  </div>
+  <br>
+
+  
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP2.　トランサミン錠250mg<br>
+	　　　　 アスペリン錠20 20mg<br>
+  　　　　 分３　毎食後服用
+  </div>
+  <div style="width:15%;display: inline-block;">
+  3錠<br>
+  3錠<br>
+  　5日分</span></div>
+  </div>
+  <br>
+  <div>
+  <div style="width:80%;display: inline-block;">
+  　RP3.　カロナール錠200 200mg<br>
+	<span style="color:blue;">　　　　 用法未取得</span></div>
+  <div style="width:15%;display: inline-block;">
+  2錠<br>
+  <span>　3回分</span></div>
+  </div>
+  </div>
+  </div> -->
+
+<!-- 
+  <div style="font-size:12px;">
+  <div style="text-align: right;color:blue;">
+  　　　　　　　　青字: 読取が不確かなため、<br>
+  　　　　　　　　ご確認いただければ幸いです。
+  </div>
+
+  </div> -->
+  <!-- {{result_sj}} -->
+<!-- ------------------------------------------- -->
+<div class="rp-box">
+  <p></p>
+
+
+  <div class="prescBox row-parent ">
+
+<div  class="presc-input">
+  <input name= "" placeholder="" class="for-qrdata" value="【般】メキタジン錠3mg">
+  
+</div>
+
+
+
+<div style="display: inline-block;" class="sub-input">
+  <input type="text" class="for-qrdata" value="2">
+</div>
+​
+<div style="display: inline-block;" class="sub-input">
+<input type="text" class="for-qrdata" value="錠">
+</div>
+​
+
+</div>
+
+
+  
+  <div class ="how-to-use fix">
+        <div >
+    
+          <input name= "" placeholder="" class="for-qrdata youhou" value=" 分2">
+        </div>
+    
+        <div >
+    
+          <input name= "" placeholder="" class="for-qrdata" value="朝・夕食後服用">
+        </div>
+        
+        <div>
+          <input name= "" placeholder="" class="for-qrdata vague" value="未取得">
+    
+        </div>
+        
+        </div>
+  
+
+  </div>
+
+  <div class="rp-box">
+    <p></p>
+
+    <div class="prescBox row-parent ">
+
+      <div  class="presc-input">
+        <input name= "" placeholder="" class="for-qrdata" value="トランサミン錠250mg">
+        
+      </div>
+      
+
+      
+      <div style="display: inline-block;" class="sub-input">
+        <input type="text" class="for-qrdata" value="3">
+      </div>
+    ​
+    <div style="display: inline-block;" class="sub-input">
+    <input type="text" class="for-qrdata"value="錠">
+    </div>
+    ​
+  ​
+    
+</div>
+    <div class="prescBox row-parent ">
+
+  <div  class="presc-input">
+    <input name= "" placeholder="" class="for-qrdata" value="アスペリン錠20 20mg">
+    
+  </div>
+  
+
+  
+  <div style="display: inline-block;" class="sub-input">
+    <input type="text" class="for-qrdata" value="3">
+  </div>
+​
+<div style="display: inline-block;" class="sub-input">
+<input type="text" class="for-qrdata"value="錠">
+</div>
+​
+
+</div>
+
+
+    
+    <div class ="how-to-use fix">
+          <div>
+      
+            <input name= "" placeholder="" class="for-qrdata youhou" value="分３">
+          </div>
+      
+          <div >
+      
+            <input type="text" class="for-qrdata" value="毎食後服用">
+          </div>
+          
+          <div>
+            <input type="text"class="for-qrdata" value="5日分">
+      
+          </div>
+          
+          </div>
+    
+
+    </div>
+    <div class="rp-box">
+      <p></p>
+  
+    
+      <div class="prescBox row-parent ">
+  
+    <div  class="presc-input">
+      <input name= "" placeholder="" class="for-qrdata" value="カロナール錠200 200mg">
+      
+    </div>
+    
+  
+    
+    <div style="display: inline-block;" class="sub-input">
+      <input type="text" class="for-qrdata" value="2">
+    </div>
+  ​
+  <div style="display: inline-block;" class="sub-input">
+  <input type="text" class="for-qrdata" value="錠">
+  </div>
+  ​
+  
+  </div>
+  
+  
+      
+      <div class ="how-to-use fix">
+            <div>
+        
+              <input name= "" placeholder="" class="for-qrdata vague youhou" value="未取得">
+            </div>
+        
+            <div >
+        
+              <input name= "" placeholder="" class="for-qrdata vague" value="未取得">
+            </div>
+            
+            <div>
+              <input name= "" placeholder="" class="for-qrdata" value="3回分">
+        
+            </div>
+            
+            </div>
+      
+  
+      </div>
+
+<!-- ------------------------------------------- -->
+    
+
+  <style>
+    
+
+  </style>
+
+
+
+  
+  
+  
+  <div class="qrcode">
+      <!--<img src={{path1}} />-->
+      <img class="img_qrcode" src='/uploads/images/accurate_qrcode.png' />
+      <!--
+      <img src={{path1}} style="margin-top: 10px; vertical-align: bottom; width: 200px;margin-left: auto;margin-right: auto;"/>
+      <img src={{path1}} style="width=80%;margin-left: auto;margin-right: auto;"/>
+      -->
+
+  </div>
+
+  <form method="get" action="/" style="text-align:center;">
+    <div>
+    <button type="submit" formmethod="get" class="qrcode_button" >最初の画面に戻る</button>
+    </div>
+  </form>
+
+</body>
+<script>
+
+
+
+  // かっこいいチェックボックスを貼りたい時
+  // wskCheckbox.init();
+  
+  
+  $(function() {
+
+  
+  
+  
+
+  
+  // ---------------------薬の欄の削除ボタン機能----------------------
+  $(document).on("click", "#close", function(){
+    var len = $(this).parents('.rp-box').find('.row-parent').length -1;
+    console.log("length:"+len);
+    if(len == 0){
+      $(this).parents('.rp-box').fadeOut(1000, function(){
+  $(this).remove();
+  });
+    }
+   
+  
+  
+    $(this).parents('.row-parent').fadeOut(300, function(){
+  $(this).remove();
+  });
+  
+    var r = $(this).parents('.row-parent').children('.cp_ipcheck').is(':checked');
+      if(r){
+        var len = $('input[name="check2"]:checked').length -1;
+      }
+      else{
+      }
+
+  });
+      
+      
+      
+
+      // ------------------全体の薬順番入れ替え機能-------------------------
+      $('#sortdata').sortable({
+      axis: "y",
+      opacity: 0.8,
+      delay: 1000
+      });
+      // sortstopイベントをバインド
+      $('#sortdata').bind('sortstop',function(){
+        // 番号を設定している要素に対しループ処理
+       
+        $('#sortdata .rp-box').find('[name="prescBoxNum"]').each(function(idx){
+          idx = idx +1;
+          // タグ内に通し番号を設定（idxは0始まりなので+1する）
+          $(this).html("薬"+idx);
+          RpNumMax = idx;
+        });
+      });
+  
+  // ------------------RPBOX内の薬順番入れ替え機能-------------------------
+  $(document).ready(function(){
+    $('.rp-box').each(function(idx){
+        if(!($(this).find('.row-parent').length)){
+        console.log("sakujo");
+        $(this).remove();
+      }
+    });
+  
+    $('.rp-box').sortable({
+      items: '.row-parent',
+      connectWith: ".rp-box",
+      cancel: ".fix",
+      axis: "y",
+      opacity: 0.8,
+      delay: 1000
+    });
+   
+  
+    $('.rp-box').bind('click.sortable mousedown.sortable',function(ev){
+      ev.target.focus();
+  });
+  $('.rp-box .prescBox').each(function(idx){
+    $(this).prepend('<h3 class="hide for-qrdata">RpNum</h3>');
+  
+  });
+  // $('.rp-box .row-parent').jrumble();
+  
+  $(".row-parent").mouseup(function(){
+      clearInterval(timer1);
+          console.log("xx");
+          $(".rp-box .row-parent").removeClass('buruburu');
+          // $('.rp-box .row-parent').trigger('stopRumble');
+    }).mousedown(function(){
+        timer1 = setTimeout(function(){
+          console.log("touch");
+          $('.rp-box .row-parent').addClass('buruburu');
+          // $('.rp-box .row-parent').trigger('startRumble');
+        },1000);
+    });
+  
+  // $('.rp-box .row-parent').bind('touchend', function() {
+  //     clearInterval(timer1);
+  //         console.log("xxend");
+  //         $(".rp-box .row-parent").removeClass('buruburu');
+  //   });
+  //   $('.rp-box .row-parent').bind('touchstart', function() {
+  //     console.log("touch");
+  //       timer1 = setTimeout(function(){
+  //         // $(this).addClass('error');
+  //         $('.rp-box .row-parent').addClass('buruburu');
+  //       },1000);
+  //   });
+  
+  
+      // sortstopイベントをバインド
+      $('.rp-box').bind('sortstop',function(){
+        // 番号を設定している要素に対しループ処理
+       
+        // $('.rp-box .prescBox').find('[name="num_data"]').each(function(idx){
+  
+          
+  
+        //   // タグ内に通し番号を設定（idxは0始まりなので+1する）
+        //   idx = idx +1;
+        //   $(this).html("薬品"+idx);
+        //   var parents_id = $(this).parents(".rp-box").attr('id');
+        //   $(this).parents(".row-parent").attr('id', parents_id);
+        //   // console.log("順番変更");
+        //   // console.log(parents_id);
+        //   $(this).find(".rp_number").val(parents_id);
+  
+         
+          
+  
+        // });
+      });
+     
+  
+      $('.buttonUI').click(function() {
+        var qrdata="";
+        var qrArrayOrigin = [];
+        
+  
+        
+  
+      $('.for-qrdata,.for-qrdata-select option:selected').map(function() {
+      target = $(this).val();
+      target2 = $(this).text();
+      target2 = target2.trim();
+      // if(target == target2 || target == '' || target2 == ''){
+      
+      if(!($.isEmptyObject(target)) && $.isEmptyObject(target2)){
+        qrdata += ","+target;
+        console.log(target);
+        qrArrayOrigin.push(target);
+      }
+      else if(!($.isEmptyObject(target2))){
+        qrdata += ","+target2;
+        console.log(target2);
+        qrArrayOrigin.push(target2);
+      }
+      // target_sum = ","+target + ","+target2;
+      // qrdata += target_sum;
+  
+      if(target == "-"|| target2=="-"){
+        $(this).addClass('error');
+        
+      }
+      $('.error').click(function(){
+        $(this).val("");
+      });
+      
+      if ($(this).hasClass('for-qrdata-alt')){
+        qrdata += "\n";
+      }
+  
+  });
+  
+      //   console.log("click");
+      //   $('.for-qrdata').each(function(i,element){
+      //   const contents = $(this).contents();
+      //   console.dir(contents);
+      
+      //   console.log("data"+JSON.stringify(contents));
+      // });
+      qrdata = qrdata.substr(1); 
+      // console.log(qrdata);
+      // console.log(qrdata[6]);
+  
+      RpNumPlace = [];
+      patientsInfo = [];
+      var AllInfo = "";
+      
+      for (var i=0; i<qrArrayOrigin.length-1; i++) {
+        if(qrArrayOrigin[i]=='RpNum'){
+          RpNumPlace.push(i);
+        }
+      }
+      console.log(RpNumPlace);
+      RpNumMax = RpNumPlace.length;
+      patientsInfo = qrArrayOrigin.slice(0,RpNumPlace[0]);
+  
+  
+      for (j=0;j<=patientsInfo.length-1;j++){
+        console.log(patientsInfo[j]);
+        AllInfo = AllInfo + patientsInfo[j] + "\n";
+      }
+      
+      for(i=0;i<=RpNumMax-1;i++){
+      eval("var Rp" + i + "=[];");
+      var end = RpNumPlace[i]+1;
+      eval("Rp" + i + "='"+qrArrayOrigin.slice(RpNumPlace[i],RpNumPlace[i+1])+"';");
+      k = eval("Rp" + i+";");
+      console.log(k);
+      AllInfo = AllInfo + k + "\n";
+      }
+  
+      console.log(AllInfo);
+     
+      
+    });
+  
+  });
+  
+  
+  
+  
+  // ---------------------RP番号BOX---------------------
+  var rp_number=[];
+  $('.rp_number').each(function(i,element){
+    rp_number[i] = $(this).val();
+  
+    // console.log("RP番号"+i+"："+rp_number[i]);
+    // console.log(element);
+  
+  
+  if(rp_number[i] == 1){
+      $(this).parents('.row-parent').addClass('rp1');
+    }
+  else if(rp_number[i] == 2){
+      $(this).parents('.row-parent').addClass('rp2');
+    }
+  else if(rp_number[i] == 3){
+      $(this).parents('.row-parent').addClass('rp3');
+    }
+    else if(rp_number[i] == 4){
+      $(this).parents('.row-parent').addClass('rp4');
+    }
+    else if(rp_number[i] == 5){
+      $(this).parents('.row-parent').addClass('rp5');
+    }
+  });
+  
+  $('.rp1').wrapAll('<div class="rp-box">');
+  $('.rp2').wrapAll('<div class="rp-box">');
+  $('.rp3').wrapAll('<div class="rp-box">');
+  $('.rp4').wrapAll('<div class="rp-box">');
+  $('.rp5').wrapAll('<div class="rp-box">');
+  
+  // ------------------RPボックスの内容、番号--------------------------
+  
+  // $(document).ready(function(){
+    
+  // $('.rp-box').each(function(i,element){
+  //   // rp_box_total = $('.rp-box').len();
+
+  
+  //   $(this).addClass('rp-box-'+num);
+  //   $(this).attr('id', num);
+  //   // $(this).val(num);
+    
+  //   $(this).find(".rp-number").val(num);
+  //   // var current_list = "{{id_22_insurance_patient_num[0]}}";
+   
+  
+  
+  
+  //   // div = $(this).find('.how-to-use').clone();
+  //   div2=div.appendTo(this);
+  //   $(div2).before('<h3 class="for-qrdata hide">how-to-use</h3>');
+  //   div2.removeClass('hide');
+  //   div2.addClass('show');
+  //   div2.find('input').addClass('for-qrdata');
+    
+  
+  //   $(this).append('<input type="button" class = "addPrescList fix" value="処方箋を追加する">');
+  
+    
+  
+      
+  
+  
+  
+  // });
+  // });
+  
+  $(document).ready(function(){
+  var pos = $( this ).prevAll( 'li' ).length;
+  
+  $('.rp-num').each(function(i,element){
+    // rp_box_total = $('.rp-box').len();
+    var pos = $( this ).prevAll( 'li' ).length;
+    
+    num = i+1;
+    $(this).prepend('<h3 name="num_data">薬品'+pos+'</h3>');
+  });
+  });
+  
+    // ----------------------欄追加ボタン----------------------------
+  // ＋ボタンで加える要素のオブジェクト
+    $(function(){
+    var data = ` 
+  <div class="row-parent">
+  <div class="cp_ipcheck"><input type="checkbox" class="option-input02 checkbox" name="check2" /></div>
+  
+  <div class="prescBox">
+  
+  
+  
+    <div>
+      <p>薬品</p>
+      <div>
+        <input name= "" placeholder="選択肢になかった場合にのみここに記入してください。" class="for-qrdata">
+        
+      </div>
+      
+      <div class="hide">
+      
+        <label>RP番号</label><br>
+        <input type="text"class="for-qrdata">
+      </div>
+  ​
+      <div class="hide">
+      
+        <label>RP番号内連番</label><br>
+        <input type="text">
+      </div>
+      
+      <div style="display: inline-block;">
+        <label>用量</label><br>
+        <input type="text" class="for-qrdata">
+      </div>
+  ​
+      <div style="display: inline-block;width:20%; ">
+        <label>単位名</label><br>
+        <input type="text" class="for-qrdata">
+      </div>
+  ​
+      <div class="hide">
+        <label>補足情報</label><br>
+        <input type="text" class="for-qrdata">
+        
+      </div>
+  ​
+      <div style="display:None;">
+        <label>薬品補足連番</label><br>
+        <input type="text" class="for-qrdata">
+      </div> 
+    </div>
+    </div>
+  
+    <div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>
+  </div>
+    `;
+    $(document).on("click", ".addPrescList", function(){
+      console.log("クリック");
+      $(this).parents('.rp-box').append($(data));
+      size = $('.cp_ipcheck').length;
+      console.log(size);
+    });
+    
+  });
+  
+  
+    // ----------------------BOX追加ボタン----------------------------
+  // ＋ボタンで加える要素のオブジェクト
+  $(function(){
+    var data = ` 
+  <div class="rp-box">
+  <p></p>
+  <h3>薬品リスト追加</h3>
+  
+  <div class ="how-to-use fix">
+        <div style="display: inline-block;">
+          <label>区分</label><br>
+    
+          <input type="text" class="for-qrdata">
+        </div>
+    
+        <div style="display: inline-block;">
+          <label>用法名称</label><br>
+    
+          <input type="text" class="for-qrdata">
+        </div>
+        
+        <div style="display: inline-block;width:20%;">
+          <label>調剤数量</label><br>
+          <input type="text"class="for-qrdata">
+    
+        </div>
+        
+        </div>
+  
+  <input type="button" class = "addPrescList fix" value="処方箋を追加する">
+  </div>
+    `;
+    $(".addRpBox").on('click',function(){
+      console.log("クリック");
+      $('#sortdata').append($(data));
+     
+    });
+    
+  });
+  
+  
+  
+   });
+  
+  
+  function send_text(){
+    var qrdata="";
+        var qrArrayOrigin = [];
+        
+  
+        
+  
+      $('.for-qrdata,.for-qrdata-select option:selected').map(function() {
+      target = $(this).val();
+      target2 = $(this).text();
+      target2 = target2.trim();
+      // if(target == target2 || target == '' || target2 == ''){
+      
+    
+  
+      if(!($.isEmptyObject(target)) && $.isEmptyObject(target2)){
+        qrdata += ","+target;
+        console.log(target);
+        qrArrayOrigin.push(target);
+      }
+      else if(!($.isEmptyObject(target2))){
+        qrdata += ","+target2;
+        console.log(target2);
+        qrArrayOrigin.push(target2);
+      }
+      
+      else if($.isEmptyObject(target2) && $.isEmptyObject(target2)){
+        qrdata += ",ダミー";
+        console.log("ダミー");
+        qrArrayOrigin.push("ダミー");
+      }
+      // target_sum = ","+target + ","+target2;
+      // qrdata += target_sum;
+  
+      if(target == "-"|| target2=="-"){
+        $(this).addClass('error');
+      }
+      
+      if ($(this).hasClass('for-qrdata-alt')){
+        qrdata += "\n";
+      }
+  
+  });
+  
+      //   console.log("click");
+      //   $('.for-qrdata').each(function(i,element){
+      //   const contents = $(this).contents();
+      //   console.dir(contents);
+      
+      //   console.log("data"+JSON.stringify(contents));
+      // });
+      qrdata = qrdata.substr(1); 
+      // console.log(qrdata);
+      // console.log(qrdata[6]);
+  
+      RpNumPlace = [];
+      patientsInfo = [];
+      var AllInfo = "";
+      
+      for (var i=0; i<qrArrayOrigin.length-1; i++) {
+        if(qrArrayOrigin[i]=='RpNum'){
+          RpNumPlace.push(i);
+        }
+      }
+      console.log(RpNumPlace);
+      RpNumMax = RpNumPlace.length;
+      patientsInfo = qrArrayOrigin.slice(0,RpNumPlace[0]);
+  
+  
+      for (j=0;j<=patientsInfo.length-1;j++){
+        console.log(patientsInfo[j]);
+        AllInfo = AllInfo + patientsInfo[j] + "\n";
+      }
+      
+      for(i=0;i<=RpNumMax-1;i++){
+      eval("var Rp" + i + "=[];");
+      var end = RpNumPlace[i]+1;
+      eval("Rp" + i + "='"+qrArrayOrigin.slice(RpNumPlace[i],RpNumPlace[i+1])+"';");
+      k = eval("Rp" + i+";");
+      console.log(k);
+      AllInfo = AllInfo + k + "\n";
+      }
+  
+      console.log(AllInfo);
+  
+    
+          var text1 = AllInfo;
+          var text2 = 'fugafuga'
+  
+          var fData = new FormData();
+  
+          fData.append('text1', text1);
+          fData.append('text2', text2);
+  
+          $.ajax({
+  
+              url: '/recept',   
+              type: 'POST',
+              data: fData ,
+              contentType: false,
+              processData: false,
+              success: function(response) {
+                 document.write(response); 
+                  //非同期で通信成功時に読み出される [200 OK 時]
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  //非同期で通信失敗時に読み出される
+                  alert('Error : ' + errorThrown);
+              }
+          });
+      }
+      
+      
+   var $nav   = $('#navArea');
+    var $btn   = $('.toggle_btn');
+    var $mask  = $('#mask');
+    var open   = 'open'; // class
+    // menu open close
+  
+    $btn.on( 'click', function() {
+      console.log("クリック");
+      if (!$nav.hasClass( open ) ) {
+        console.log("open");
+        $nav.addClass( open );
+      } else {
+        console.log("close");
+        $nav.removeClass( open );
+      }
+    });
+    // mask close
+    $mask.on('click', function() {
+      $nav.removeClass( open );
+    });
+      
+    
+  
+  
+  $(window).on('load', function() {
+    var opts = $('.medicine-data-list option');
+    console.log(opts.get());
+  });
+  
+  
+  
+      </script>
+</html>

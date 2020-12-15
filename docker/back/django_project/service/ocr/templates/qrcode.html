@@ -1,0 +1,44 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+  </head>
+  <body>
+  <div style="text-align:center;font-size:40px;">
+    {% if birthday_gengou==1 %}
+      <p>明治{{birthday}}生まれ<br>{{id_11_patient_name_kanji}}様</p>
+    {% elif birthday_gengou==2 %}
+      <p>大正{{birthday}}生まれ<br>{{id_11_patient_name_kanji}}様</p>
+    {% elif birthday_gengou==3 %}
+      <p>昭和{{birthday}}生まれ<br>{{id_11_patient_name_kanji}}様</p>
+    {% elif birthday_gengou==4 %}
+      <p>平成{{birthday}}生まれ<br>{{id_11_patient_name_kanji}}様</p>
+    {% elif birthday_gengou==5 %}
+      <p>令和{{birthday}}生まれ<br>{{id_11_patient_name_kanji}}様</p>
+    {% endif %}
+  </div>
+  <div style="text-align:center;color:red;">
+  {% if mojibake>0 %}
+    <p>文字化けが{{mojibake}}個あります。レセコンで修正してください。</p>
+  {% endif %}
+  </div>
+  
+  <div class="qrcode">
+      <!--<img src={{path1}} />-->
+      <img class="img_qrcode" src={{path1_sj}} />
+      <!--
+      <img src={{path1}} style="margin-top: 10px; vertical-align: bottom; width: 200px;margin-left: auto;margin-right: auto;"/>
+      <img src={{path1}} style="width=80%;margin-left: auto;margin-right: auto;"/>
+      -->
+
+  </div>
+
+  <form method="get" action="/" style="text-align:center;">
+    <div>
+    <button type="submit" formmethod="get" class="qrcode_button" >画像送信画面へ</button>
+    </div>
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+
+  
+  <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+  <script src="static/jquery.min.js"></script>
+  <script src="https://riversun.github.io/jsframe/jsframe.js"></script>
+  
+  
+  </head>
+  <body>
+    <div id="navArea">
+      <a class="header" href ="/">mediLab AI</a>
+
+      <nav>
+        <div class="inner">
+          <ul>
+            <li><a href="/report">お問い合わせ</a></li>
+            <li><a href="#">設定</a></li>
+            <li><a href="#">ログアウト</a></li>
+          </ul>
+        </div>
+      </nav>
+    
+      <div class="toggle_btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    
+      <div id="mask"></div>
+    
+    </div>
+
+
+<div class="index modal" style="padding-bottom: 150px;position: relative;box-sizing: border-box;min-height: 100vh;">
+<div style="position: absolute;transform: translateY(-50%) translateX(-50%);top: 50%;left: 50%;width:100%">
+<img class="front-image"src="static/logo2.png">
+
+<form id="form_id"　method="post" action="/result1" enctype="multipart/form-data" class="front-form">
+
+<div class="pre_list_1 pre_list">
+  <div  class="row-parent">　
+    <div class="thumbnail_design" id="view_1"></div>
+    <div class="pre_list_text">
+    <label class="pre_list_label">処方箋の撮影
+    <input  class="hide" type="file" id="file_1" name="img[]" accept="image/*">
+    </label>
+    </div>
+  </div>
+</div>
+<div class="pre_list_2  pre_list hide">
+  <div  class="row-parent">　
+    <div class="thumbnail_design" id="view_2"></div>
+    <div class="pre_list_text">
+    <label class="pre_list_label">
+    処方箋の撮影
+    <input  class="hide" type="file" id="file_2" name="img[]" accept="image/*">
+    </label>
+    </div>
+  </div>
+</div>
+<div class="pre_list_3 hide">
+  <div  class="pre_list_3 row-parent">　
+    <div class="thumbnail_design" id="view_3"></div>
+    <div class="pre_list_text">
+    <label class="pre_list_label">
+    処方箋の撮影
+    <input  class="hide" type="file" id="file_3" name="img[]" accept="image/*">
+    </label>
+    </div>
+  </div>
+</div>
+<div class="pre_list_4 hide">
+  <div  class="row-parent">　
+    <div class="thumbnail_design" id="view_4"></div>
+    <div class="pre_list_text">
+    <label >
+    処方箋の変更
+    <input  class="hide" type="file" id="file_4" name="img[]" accept="image/*">
+    </label>
+    </div>
+  </div>
+</div>
+<div class="pre_list_5 hide">
+  <div  class="row-parent">　
+    <div class="thumbnail_design" id="view_5"></div>
+    <div class="pre_list_text">
+    <label >
+    処方箋の変更
+    <input  class="hide" type="file" id="file_5" name="img[]" accept="image/*">
+    </label>
+    </div>
+  </div>
+</div>
+
+    <!-- <table>
+        <thead>
+        <tr>
+       
+        <th></th>
+        </tr>
+        </thead>
+        <tbody class="mock">
+        <tr class="pre_list_mother">
+            
+            <td  class="pre_list_1 row-parent ">　
+                <div class="thumbnail_design" id="view_1"></div>
+                <div class="pre_list_text">
+                <label >
+                処方箋の変更
+                <input  class="hide" type="file" id="file_1" name="img[]" accept="image/*">
+                </label>
+                </div>
+            </td>
+
+            <td  class="pre_list_2 row-parent collapse">　
+              <div class="thumbnail_design" id="view_2"></div>
+              <div class="pre_list_text">
+              <label >
+              処方箋の変更
+              <input  type="file" id="file_2" name="img[]" accept="image/*">
+              </label>
+              </div>
+          </td>
+
+          <td  class="pre_list_3 row-parent hide">　
+            <div class="thumbnail_design" id="view_3"></div>
+            <div class="pre_list_text">
+            <label >
+            処方箋の変更
+            <input  class="hide" type="file" id="file_3" name="img[]" accept="image/*">
+            </label>
+            </div>
+        </td>
+            
+        </tr>
+        </tbody>
+        <tfoot class="mock">
+        <tr>
+            <td>
+                <button class="tuika btn btn-4" id="add" type="button">追加</button><span id="reload"></span>
+            </td>
+            <td class="center"　style="margin-bottom: 3em;">　
+              <div id="view_1"></div>
+              <label class="pic btn-3">
+              撮影
+              <input class="hide" type="file" id="file_1" name="img[]" accept="image/*">
+              </label>
+          </td>
+        </tr>
+        </tfoot>
+    </table> -->
+    <span id="message"></span>
+    <button type="submit" formmethod="POST" onclick="start()" class="btn btn-4 tuika" id="prescSend"　>送信</button>
+
+    
+</form>
+<div style=" margin-top: 50px;">
+<div style="text-align:center;" class="report-button">
+
+  <a href="/report">報告する</a>
+</div>
+</div>
+</div>
+<!--
+<p style="color: gray;">@　mediLab. Inc</p>
+-->
+
+</div>
+
+<div id="fadeLayer" class="hide"></div>
+<div id="Modal_on_fade" class="hide">
+  <div class="modal">
+    <div class="modal-design">
+      <h3>送信中です・・・</h3>
+  
+  <h1 id="count-down">5</h1>
+  
+  <div class="flexBox">
+    <div id="one" class="loading">
+    </div>
+    <div id="two" class="loading">
+    </div>
+    <div id="three" class="loading">
+    </div>
+    <div id="four" class="loading">
+    </div>
+    <div id="five" class="loading">
+    </div>
+  </div>
+  
+  
+  <div class="tips">
+    <h5>新薬・新製品情報</h5>
+    <p id="tipsTitle"></p>
+    <p id="tips"></p>
+  </div>
+  </div>
+  </div>
+</div>
+  
+
+
+    <!-- <div class="logo-rotation">
+  </div>
+     -->
+  
+     
+
+<script>
+
+$('#form_id').submit(function(){
+
+for(let i=1;i<6;i++){
+
+  if(!$("#file_"+i).val()){
+    console.log($("#file_"+i).val());
+    $("#file_"+i).prop("disabled", true);
+
+  }
+
+}
+//
+// バリデーションチェックや、データの加工を行う。
+//
+
+//バリデーションチェックの結果submitしない場合、return falseすることでsubmitを中止することができる。
+// return false;
+})
+
+  $('<div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>').prependTo('.thumbBox');
+
+  function start(){
+    countup();
+    console.log("show");
+    $("#fadeLayer").removeClass("hide");
+    $("#fadeLayer").addClass("show");
+    $("#Modal_on_fade").removeClass("hide");
+    $("#Modal_on_fade").addClass("show");
+
+
+
+}
+$(function(){
+
+var fileCheck =0;
+        var num = 1;
+        var view_count = document.querySelectorAll("div[id]").length;
+ 
+        function imgView(n) {
+            var reader = new FileReader();
+            document.getElementById('file_' + n).onchange = function (e) {
+                console.log("file added");
+                reader.addEventListener('load', function (e) {
+                    $('#view_' + n).html('<img class="thumbnail" src="' + e.target.result + '" />');
+                    fileCheck ++
+                    inputCheck();
+
+                });
+                reader.readAsDataURL(this.files[0]);
+                $('.pre_list_' + n+1).removeClass('hide');
+                $('.pre_list_' + n+1).addClass('show');
+            }
+
+
+ 
+        }
+ 
+        imgView(num);
+// --
+        document.getElementById('file_1').onchange = function (e) {
+          var reader = new FileReader();
+                console.log("file added");
+                reader.addEventListener('load', function (e) {
+                    $('#view_1').html('<img class="thumbnail" style="height: 100px" src="' + e.target.result + '" />');
+                    fileCheck ++
+                    inputCheck();
+                });
+                reader.readAsDataURL(this.files[0]);
+                $('.pre_list_2').removeClass('hide');
+                $('.pre_list_2').addClass('show');
+            }
+
+        document.getElementById('file_2').onchange = function (e) {
+          var reader = new FileReader();
+                console.log("file added");
+                reader.addEventListener('load', function (e) {
+                    $('#view_2').html('<img class="thumbnail" style="height: 100px" src="' + e.target.result + '" />');
+                    fileCheck ++
+                    inputCheck();
+                });
+                reader.readAsDataURL(this.files[0]);
+                $('.pre_list_3').removeClass('hide');
+                $('.pre_list_3').addClass('show');
+            }
+          document.getElementById('file_3').onchange = function (e) {
+          var reader = new FileReader();
+                console.log("file added");
+                reader.addEventListener('load', function (e) {
+                    $('#view_3').html('<img class="thumbnail" style="height: 100px" src="' + e.target.result + '" />');
+                    fileCheck ++
+                    inputCheck();
+                });
+                reader.readAsDataURL(this.files[0]);
+                $('.pre_list_4').removeClass('hide');
+                $('.pre_list_4').addClass('show');
+            }
+        
+
+ 
+        $('button#add').click(function () {
+ 
+          if(view_count ===10 ){
+              $('#message').html('※ 追加フォームは' + view_count + 'つまでです。<br>');
+            }else{
+ 
+            num = num + 1;
+            view_count = view_count + 1;
+ 
+              var tr_form = '' +
+                  '<tr class="thumbBox mock">' +
+                  '<div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>'+
+                  
+                  '<td class="center"　style="margin-bottom: 3em;"><div  id="view_' + num + '"></div><label class="pic btn-3">撮影<input type="file" class="hide" id="file_' + num + '" name="img[]" accept="image/*" /></label></td>' +
+                  '</tr>';
+              $(tr_form).appendTo($('table > tbody'));
+            
+              $('.RemoveButton').remove();
+              $('<div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>').prependTo('.thumbBox');
+              
+              imgView(num);
+          }
+        });
+
+
+ 
+ //ファイルチェック
+ function inputCheck(){
+  
+  var fileCheck = $('.thumbnail').length;
+            console.log(fileCheck);
+   
+            if(fileCheck == 0){
+              $("#prescSend").attr("disabled",true);
+            }
+            else if(fileCheck >= 0){
+              console.log("fileCheck");
+              $("#prescSend").attr("disabled",false);
+        }
+  
+ }
+  
+   //フォームの中身を検証
+   inputCheck();
+
+   $(document).on("click", ".RemoveButton", function(){
+     console.log("remove");
+    $(this).parents('.thumbBox').remove();
+});
+
+   function removeButton(){
+    $(this).parents('thumbBox').remove();
+   }
+   
+  
+ });
+  
+ var $nav   = $('#navArea');
+  var $btn   = $('.toggle_btn');
+  var $mask  = $('#mask');
+  var open   = 'open'; // class
+  // menu open close
+
+  $btn.on( 'click', function() {
+    console.log("クリック");
+    if (!$nav.hasClass( open ) ) {
+      console.log("open");
+      $nav.addClass( open );
+    } else {
+      console.log("close");
+      $nav.removeClass( open );
+    }
+  });
+  // mask close
+  $mask.on('click', function() {
+    $nav.removeClass( open );
+  });
+
+
+//ウィンドウを表示する
+
+// -----------------モーダル
+
+
+var data = [
+ {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤          「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    },
+    {
+      "code": "G-021",
+      "title": "大杉製薬　FCエキス錠シリーズ　苓桂朮甘湯を新発売",
+      "name": "医療用漢方製剤としての錠剤はこれまでに例がなく、服用しやすく、漢方薬の味やにおいが苦手な患者にも提供できるようになります。",
+      "price": 100
+    },
+    {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    },
+    {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    },
+    {
+      "code": "G-010",
+      "title": "MSD製薬　深在性真菌症治療剤「ノクサフィル点滴静注300mg」新発売",
+      "name": "新規のアゾール系抗真菌剤です。4月に錠剤が発売されていたが、吐き気や口腔粘膜炎で錠剤が服用できない患者に使い分けて使用できるようになりました。",
+      "price": 200
+    }
+];
+
+
+
+  var count = 0;
+  function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+const tipsShow = function(){
+  $('#tipsTitle').append(data[getRandomInt(5)].title).hide().fadeIn(1000);
+  $('#tips').append(data[getRandomInt(5)].name).hide().fadeIn(1000);
+
+
+  }
+  
+
+
+// console.log(getRandomInt(2))
+  var countup = function(){
+    count++;
+    if(count == 1){
+   
+      $('#count-down').text("5");
+      console.log("処方箋画像を送信中....");
+      $('#two').addClass("gray");
+
+      tipsShow();
+      
+      
+
+    }
+    else if(count == 2){
+      $('#count-down').text("4");
+      console.log("文字起こし中...");
+      $('#two').removeClass("gray");
+      $('#three').addClass("gray");
+
+    }
+    else if(count == 3){
+      $('#count-down').text("3");
+      console.log("医薬品リストと照合中...");
+      $('#three').removeClass("gray");
+      $('#four').addClass("gray");
+
+    }
+    else if(count == 4){
+      $('#count-down').text("2");
+      console.log("処方箋リストの生成中...");
+      $('#four').removeClass("gray");
+      
+      $('#two').addClass("gray");
+      $('#three').addClass("gray");
+      $('#four').addClass("gray");
+   
+
+    }
+    else if(count == 5){
+      $('#count-down').text("1");
+      console.log("処方箋リストの生成中...");
+    
+        $('#two').removeClass("gray");
+        $('#three').removeClass("gray");
+        $('#four').removeClass("gray");
+
+      
+
+
+    }
+
+    setTimeout(countup, 1000);
+  } 
+
+
+
+
+
+
+</script>
+  </body>
+</html>

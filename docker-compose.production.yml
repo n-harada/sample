@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+
+  back:
+    container_name: prescription_back
+    build:
+      context: ./
+      dockerfile: ./docker/back/Dockerfile
+    working_dir: "/app/docker/back/django_project"
+    tty: true
+    volumes:
+      - ./docker/back:/app/docker/back/
+    expose:
+      - 9000
+    ports:
+      - "8083:8083"
+
+  nginx:
+    container_name: prescription_nginx
+    build: ./docker/nginx
+    ports:
+      - 80:80
+    # depends_on:
+    #   - back

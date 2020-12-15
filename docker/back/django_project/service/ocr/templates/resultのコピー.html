@@ -1,0 +1,187 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    
+  </head>
+  <body>
+ <table border="1">
+    <tr>
+      <th>項目</th>
+      <th>読み取り結果</th>
+      <th>修正事項</th>
+    </tr>
+    <tr>
+      <td>氏名</td>
+      <td>{{name}}</td>
+      <td>
+      <input type="text" name="name" value={{name}}>
+      </td>
+    </tr>
+    <tr>
+      <td>保険者番号</td>
+      <td>{{hokensyanum}}</td>
+      <td>
+      <input type="text" name="hokensyanum" value={{hokensyanum}}>
+      </td>
+    </tr>
+    <tr>
+      <td>被保険者証・被保険者手帳の記号・番号</td>
+      <td>{{hokensyanum2}}</td>
+      <td>
+      <input type="text" name="hokensyanum2"value={{hokensyanum2}}>
+      </td>
+    </tr>
+    <tr>
+      <td>患者生年月日</td>
+      <td>{{birthday}}</td>
+      <td>
+      <input type="text" name="birthday"value={{birthday}}>
+      </td>
+    </tr>
+    <tr>
+      <td>患者性別</td>
+      <td>{{gender}}</td>
+      <td>
+      <select name="gender">
+      <option value=“male” selected>男
+      <option value=“female”>女
+      
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td>患者区分</td>
+      <td>init</td>
+      <td>
+      <select name="kubun">
+      <option value=“male” selected>被保険者
+      <option value=“female”>被扶養者
+      
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td>保険医療機関の所在地</td>
+      <td>{{place}}</td>
+      <td>
+      <textarea type="text" name="place"rows="4">{{place}}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td>保険医療機関の名前</td>
+      <td>{{hospital_name}}</td>
+      <td>
+      <textarea type="text" name="hospital_name"rows="4">{{hospital_name}}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td>電話番号</td>
+      <td>{{call_number}}</td>
+      <td>
+      <input type="text" name="call_number"value={{call_number}}>
+      </td>
+    </tr>
+    <tr>
+      <td>保険医氏名</td>
+      <td>{{doctor_name}}</td>
+      <td>
+      <input type="text" name="doctor_name"value={{doctor_name}}>
+      </td>
+    </tr>
+    <tr>
+      <td>交付年月日</td>
+      <td>{{when}}</td>
+      <td>
+      <input type="text" name="when"value={{when}}>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名1</td>
+      <td  style="word-wrap:break-all;">{{medicine1_name}}</td>
+      <td>
+      <textarea type="text" name="medicine1_name" rows="4">{{medicine1_name}}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名1_自信</td>
+      <td  style="word-wrap:break-all;">{{medicine1_zishin}}</td>
+      
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">用法用量1</td>
+      <td  style="word-wrap:break-all;">{{medicine1_ryou}}</td>
+      <td>
+      <textarea type="text" name="medicine1_ryou" rows="4">{{medicine1_ryou}}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名2</td>
+      <td  style="word-wrap:break-all;">{{medicine2_name}}</td>
+      <td>
+      <textarea type="text" name="medicine2_name" rows="4">{{medicine2_name}} </textarea>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名2_自信</td>
+      <td  style="word-wrap:break-all;">{{medicine2_zishin}}</td>
+      
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">用法用量2</td>
+      <td  style="word-wrap:break-all;">{{medicine2_ryou}}</td>
+      <td>
+      <textarea type="text" name="medicine2_ryou" rows="4">{{medicine2_ryou}}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名3</td>
+      <td  style="word-wrap:break-all;">{{medicine3_name}}</td>
+      <td>
+      <input type="text" name="medicine3_name"value={{medicine3_name}}>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名3_自信</td>
+      <td  style="word-wrap:break-all;">{{medicine3_zishin}}</td>
+      
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">用法用量3</td>
+      <td  style="word-wrap:break-all;">{{medicine3_ryou}}</td>
+      <td>
+      <textarea type="text" name="medicine3_ryou" rows="4">{{medicine3_ryou}}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名4</td>
+      <td  style="word-wrap:break-all;">{{medicine4_name}}</td>
+      <td>
+      <input type="text" name="medicine4_name"value={{medicine4_name}}>
+      </td>
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">医薬品名4_自信</td>
+      <td  style="word-wrap:break-all;">{{medicine4_zishin}}</td>
+      
+    </tr>
+    <tr>
+      <td  style="word-wrap:break-all;">用法用量4</td>
+      <td  style="word-wrap:break-all;">{{medicine4_ryou}}</td>
+      <td>
+      <textarea type="text" name="medicine4_ryou"rows="4">{{medicine4_ryou}} </textarea>
+      </td>
+    </tr>
+
+    
+
+  </table>
+  <p>{{result}}</p>
+  <div>
+  
+      <img src={{path}} style="margin-top: 10px; vertical-align: bottom; width: 200px;">
+      
+  
+  </div>
+
+</body>
+</html>

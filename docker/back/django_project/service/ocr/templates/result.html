@@ -1,0 +1,1380 @@
+<html lang="ja">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+    <!--<link href="jquery.fs.zoomer.css" rel="stylesheet" type="text/css" media="all">-->
+
+  
+    <script src="static/jquery.min.js"></script>
+    <script src="static/jquery.fs.zoomer.js"></script>
+    <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+    <link rel="stylesheet" href="{{url_for('static', filename='jquery.fs.zoomer.css')}}">
+
+    <script src="static/pinch-zoom.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    
+
+     <!-- <script type="text/javascript" src="static/footerFixed.js"></script>  -->
+
+
+  </head>
+  <body>
+   <!--
+  <script type="text/javascript">
+ 
+  $(function() {
+  
+    $('button#add').click(function(){
+  
+    
+
+    var add_form = '' +
+    '<div><textarea type="text" name="medicine_name[]" rows="4"></textarea></div>'+
+    '<div><textarea type="text" name="medicine_ryou[]" rows="4"></textarea></div>';
+
+  
+    $(add_form).appendTo($('div > div .medicine_last'));
+  
+  });
+  
+  });
+  </script> 
+  -->
+
+
+  
+
+  <div class=total >
+  <div class=prescription_image >
+  <img class=prescription src={{path_input_image}} id="image1"/>
+<!--
+  <script>
+  $(document).ready(function() {
+    $(".prescription_image").zoomer();
+  }, { passive: true }
+  );
+  </script>
+-->
+<!--
+<script>
+let el = document.querySelector('#prescription_image');
+let pz = new PinchZoom(el, options);
+</script>
+-->
+
+  </div>
+  <div id="navArea">
+
+    <nav>
+      <div class="inner">
+        <ul>
+          <li><a href="#">チュートリアル</a></li>
+          <li><a href="#">設定</a></li>
+          <li><a href="#">ログアウト</a></li>
+        </ul>
+      </div>
+    </nav>
+  
+    <div class="toggle_btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  
+    <div id="mask"></div>
+  
+  </div>
+
+  <div class="user_input" >
+    <div>
+      <ul class="tabs">
+          <li class="active" id="tab1">基本情報</li>
+          <li id="tab2">処方箋情報</li>
+      </ul>
+      </div>
+
+
+  <div class="frame page1">
+  {% if boke==True %}
+  <p style="color:red;">画像がピンボケしているかもしれません。ご確認ください。</p>
+  {% endif %}
+  <h2>患者基本情報</h2>
+  <div>
+    <!--
+    <div>
+      <label>保険者番号</label><br>
+      <select name="id_22_insurance_patient_num">
+      {%for bangou in id_22_insurance_patient_num %}
+        <option value={{bangou}} selected>{{bangou}}
+      {% endfor %}
+      </select>
+    </div>
+    -->
+    <div class="row-parent">
+      <div class="box row">
+
+    <div>
+      <label>保険者番号</label><br>
+      
+      {% if id_22_insurance_patient_num[0]!=None %}
+      <input class="input-large for-qrdata" name="id_22_insurance_patient_num" list="id_22_insurance_patient_num" value={{id_22_insurance_patient_num[0]}}>
+      {% else　%}
+      <input class="input-large for-qrdata" name="id_22_insurance_patient_num" list="id_22_insurance_patient_num" >
+      {% endif %}
+      <!--
+      {% set inputvalue =id_22_insurance_patient_num[0]  %}
+      <input name="id_22_insurance_patient_num" list="id_22_insurance_patient_num" value={{inputvalue}}>
+      -->
+      <datalist id="id_22_insurance_patient_num" name="id_22_insurance_patient_num">
+      もしくはリストから選択
+        <select name="id_22_insurance_patient_num">
+        {%for bangou in id_22_insurance_patient_num %}
+        <option value={{bangou}} selected>{{bangou}}
+        {% endfor %}
+        </select>
+      </datalist>
+    </div>
+
+    
+<!--
+    <div>
+      <label>被保険者証・被保険者手帳の記号・番号</label><br>
+      <select name="_23_insurance_card_result">
+      {%for insurance_card in _23_insurance_card_result %}
+        <option value={{insurance_card}} selected>{{insurance_card}}
+      {% endfor %}
+      </select>
+      
+    </div>
+    -->
+
+    <div>
+      <label>被保険者証・被保険者手帳の記号・番号</label><br>
+      
+      {% if _23_insurance_card_result[0]!=None %}
+      <input class="input-large for-qrdata" name="_23_insurance_card_result" list="_23_insurance_card_result" value={{_23_insurance_card_result[0]}}>
+      {% else%}
+      <input class="input-large for-qrdata" name="_23_insurance_card_result" list="_23_insurance_card_result" >
+      {% endif %}
+      
+      <datalist id="_23_insurance_card_result" name="_23_insurance_card_result">
+      もしくはリストから選択
+        <select name="_23_insurance_card_result">
+        {%for bangou in _23_insurance_card_result %}
+        <option value={{bangou}} selected>{{bangou}}
+        {% endfor %}
+        </select>
+      </datalist>
+    </div>
+
+    <!--
+    <div>
+      <label>患者氏名</label><br>
+      {% if basic_result[8]!=None %}
+      <input class="input-large for-qrdata" type="text" name="id_11_patient_name_kanji" value={{basic_result[8]}}><br><br>
+      {% else%}
+      <input class="input-large for-qrdata" type="text" name="id_11_patient_name_kanji"}}><br><br>
+      {% endif %}
+      {% if basic_result[9]!=None %}
+      <input class="input-large for-qrdata" type="text" name="id_11_patient_name_kana" value={{basic_result[9]}}>
+      {% else%}
+      <input class="input-large for-qrdata" type="text" name="id_11_patient_name_kana" >
+      {% endif %}
+      
+    </div><br>-->
+
+    <div>
+      <label>患者氏名</label><br>
+      
+      {% if basic_result[17]!=[] %}
+      <input class="input-large for-qrdata" name="id_11_patient_name_kanji" list="id_11_patient_name_kanji" value={{basic_result[17][0]}}>
+      {% else　%}
+      <input class="input-large for-qrdata" name="id_11_patient_name_kanji" list="id_11_patient_name_kanji" >
+      {% endif %}
+      <datalist id="id_11_patient_name_kanji" name="id_11_patient_name_kanji">
+      もしくはリストから選択
+        <select name="id_11_patient_name_kanji">
+        {%for patient_kanji in basic_result[17] %}
+        <option value={{patient_kanji}} selected>{{patient_kanji}}
+        {% endfor %}
+        </select>
+      </datalist>
+
+      {% if basic_result[18]!=[] %}
+      <input class="input-large for-qrdata" name="id_11_patient_name_kana" list="id_11_patient_name_kana" value={{basic_result[18][0]}}>
+      {% else　%}
+      <input class="input-large for-qrdata" name="id_11_patient_name_kana" list="id_11_patient_name_kana" >
+      {% endif %}
+      <datalist id="id_11_patient_name_kana" name="id_11_patient_name_kana">
+      もしくはリストから選択
+        <select name="id_11_patient_name_kana">
+        {%for patient_kana in basic_result[18] %}
+        <option value={{patient_kana}} selected>{{patient_kana}}
+        {% endfor %}
+        </select>
+      </datalist>
+    </div>
+
+    <div>
+
+    <div style="display: inline-block;width:50%; ">
+      <label>患者生年月日</label><br>
+        <div style="display: inline-block;width:20%; ">
+          <select name="birthday_gengou" class="for-qrdata-select">
+          <option value=1>明治
+          <option value=2>大正
+          <option value=3 selected>昭和
+          <option value=4>平成
+          <option value=5>令和
+          </select>
+        </div>
+
+        <div style="display: inline-block;width:70%; ">
+        {% if basic_result[11]!=None %}
+          <textarea type="text" name="_13_patient_birthday" rows="1" class="for-qrdata">{{basic_result[11]}}</textarea>
+        {% else%}  
+        <textarea type="text" name="_13_patient_birthday" rows="1"class="for-qrdata"></textarea>
+        {% endif %}
+          
+        </div>
+    </div>
+
+    <div style="display: inline-block;width:20%; ">
+      <label >患者性別</label>
+      {% if basic_result[10]=='男' %}
+      <select name="id_12_patient_sex" style="display: inline-block;" class="for-qrdata-select">
+      <option value=“1” selected>男
+      <option value=“2” >女
+      </select>
+      {% else%}
+      <select name="id_12_patient_sex" style="display: inline-block;" class="for-qrdata-select">
+      <option value=“1” >男
+      <option value=“2” selected>女
+      </select>
+      {% endif %}
+    </div>
+
+    </div>
+  </div>
+</div>
+  </div>
+
+    
+<div class="row-parent">
+  <div class="box row">
+    <div>
+      <label>患者区分</label><br>
+      <select name="_23_insurance_type" class="for-qrdata-select">
+      <option value=“被保険者” selected>被保険者</option>
+      <option value=“被扶養者”>被扶養者</option>
+      
+      </select>
+      
+    </div>
+
+    <div>
+      <label>交付年月日</label><br>
+      <select name="prescription_gengou" style="display: inline-block;width:20%; " class="for-qrdata-select">
+      <option value=1>明治
+      <option value=2>大正
+      <option value=3 >昭和
+      <option value=4 selected>平成
+      <option value=5>令和
+      </select>
+      {% if basic_result[16]!=None %}
+      <textarea type="text" name="_51_prescription_date"rows="1" style="display: inline-block;width:40%;" class="for-qrdata">{{basic_result[16]}}</textarea>
+      <!--<input type="text" name="_51_prescription_date"value={{basic_result[16]}} maxlength="30">-->
+      {% else%}
+      <textarea type="text" name="_51_prescription_date"rows="1" style="display: inline-block;width:40%;" class="for-qrdata"></textarea>
+      {% endif %}
+      
+    </div>
+
+    <div>
+      <label>医療機関の名前</label><br>
+      {% if basic_result[3]!=None %}
+      <textarea type="text" name="id_1_hospital_name"rows="2" class="for-qrdata">{{basic_result[3]}}</textarea>
+      {% else%}
+      <textarea type="text" name="id_1_hospital_name"rows="2" class="for-qrdata"></textarea>
+      {% endif %}
+      
+    </div>
+
+    <div style="display:None;">
+      <label>_1_hospital_code_type</label><br>
+      {% if basic_result[0]!=None %}
+      <input type="text" name="_1_hospital_code_type"value={{basic_result[0]}} class="for-qrdata">  
+      {% else%}
+      <input type="text" name="_1_hospital_code_type" class="for-qrdata">
+      {% endif %}
+    </div>
+
+    <div style="display:None;">
+    
+      <label>_1_hospital_code</label><br>
+      {% if basic_result[1]!=None %}
+      <input type="text" name="_1_hospital_code"value={{basic_result[1]}} class="for-qrdata">
+      {% else%}
+      <input type="text" name="_1_hospital_code" class="for-qrdata">
+      {% endif %}
+      
+    </div>
+
+    <div style="display:None;">
+      <label>_1_hospital_place_code</label><br>
+      {% if basic_result[2]!=None %}
+      <input type="text" name="_1_hospital_place_code"value={{basic_result[2]}} class="for-qrdata">
+      {% else%}
+      <input type="text" name="_1_hospital_place_code"class="for-qrdata">
+      {% endif %}
+    </div>
+    
+    <!--
+    <div>
+      <label>保険医氏名</label><br>
+      {% if basic_result[6]!=None %}
+
+      <textarea type="text" name="_5_doctor_name_kanji"rows="1"　class="for-qrdata">{{basic_result[6]}}</textarea>
+
+      {% else%}
+      <textarea type="text" name="_5_doctor_name_kanji"rows="1"class="for-qrdata for-qrdata-alt"></textarea>
+      {% endif %}
+    </div>
+    -->
+
+
+    <div>
+      <label>保険医氏名</label><br>
+      
+      {% if basic_result[19]!=[] %}
+      <input class="input-large for-qrdata" name="_5_doctor_name_kanji" list="_5_doctor_name_kanji" value={{basic_result[19][0]}}>
+      {% else　%}
+      <input class="input-large for-qrdata" name="_5_doctor_name_kanji" list="_5_doctor_name_kanji" >
+      {% endif %}
+      <datalist id="_5_doctor_name_kanji" name="_5_doctor_name_kanji">
+      もしくはリストから選択
+        <select name="_5_doctor_name_kanji">
+        {%for doctor_kanji in basic_result[19] %}
+        <option value={{doctor_kanji}} selected>{{doctor_kanji}}
+        {% endfor %}
+        </select>
+      </datalist>
+    </div>
+    
+    
+    </div>
+  </div>
+  <div class="right">
+  <div id ="progress1" class="progressbar"></div>
+  <input type="button" id="NextButton" class="buttonUI" value="次のページへ">
+  </div>
+
+</div>
+
+
+
+    <div class="frame page2">
+    <h2>医薬品情報</h2>
+    <div>
+    <div id="sortdata">
+    {% for num in range(6) %}
+    {% if  med_result[num].薬品名称 !="" %}
+    
+    <div class="row-parent">
+      <div class="prescBox row">
+    <p class="presc-num for-qrdata" name="num_data" >薬品{{num+1}}</p>
+    <div >
+      {% set m_name ="name"+num|string  %}
+      {% set o = [] %}
+      {% if  med_result[num].accuracy_check !="あった" %}
+      <!-- <select name={{m_name}} class="input-large with-less-confidence for-qrdata-select">
+        {%for medi in med_result[num].薬品名称 %}
+        <option value={{medi}}  selected>{{medi}}
+        {% endfor %}
+      </select> -->
+      <input name={{m_name}} class="input-large with-less-confidence for-qrdata medicine-data-list" list="keywords" value={{med_result[num].薬品名称[0]}} >
+      <datalist id="keywords">
+
+      {{ o.append( med_result[num].薬品名称 ) }}
+      {%for medi in med_result[num].薬品名称 %}
+
+      <option value={{medi}} selected>{{medi}}</option>
+      <!-- <script>
+        console.log("{{medi}}");
+      </script> -->
+      
+      {% endfor %}
+    </datalist>
+
+
+      {% else %}
+      <select name={{m_name}} class="input-large for-qrdata-select">
+        {%for medi in med_result[num].薬品名称 %}
+        <option value={{medi}}  selected>{{medi}}
+        {% endfor %}
+      </select>
+      {% endif %}
+      
+      <!--{% if med_result[num].薬品名称[0]!=None %}-->
+      <!--<input name={{m_name}} list={{m_name}} value={{med_result[num].symspell結果}}>-->
+      <input name={{m_name}} list={{m_name}} placeholder="選択肢になかった場合にのみここに記入してください。" class="for-qrdata-select">
+      <!--{% endif %}-->
+      
+      <datalist id={{m_name}} name={{m_name}}>
+      
+        {%for medi in med_result[num].薬品名称 %}
+        <option value={{medi}}>{{medi}}
+        {% endfor %}
+        
+      </datalist>
+    </div>
+    <script>
+      $(".medicine-data-list").click(function(){
+      
+      console.log('{{o[0]}}');
+      })
+
+    </script>
+    <div class="hide">
+    
+      <label>RP番号</label><br>
+      {% set rp ="rp"+num|string  %}
+      <!--<p>{{pr}}</p>-->
+      <input type="text" name={{rp}} class="rp_number for-qrdata" value={{med_result[num].RP番号}}>
+    </div>
+
+    <div class="hide">
+    
+      <label>RP番号内連番</label><br>
+
+      {% set rprenban ="rprenban"+num|string  %}
+      <input type="text" name={{rprenban}} value={{med_result[num].PR番号内連番}}>
+    </div>
+    
+    <div style="display: inline-block;">
+      <label class ="label-small">用量と単位</label><br>
+      {% set ryou ="ryou"+num|string  %}
+      <input type="text" name={{ryou}} value={{med_result[num].用量}} class="for-qrdata cp_iptxt">
+
+    </div>
+
+    <div style="display: inline-block;width:20%; ">
+      <!-- <label>単位名</label><br> -->
+      {% set tanni ="tanni"+num|string  %}
+      {% if med_result[num].単位名!=None %}
+      <input type="text" name={{tanni}} class="for-qrdata for-qrdata-alt cp_iptxt" list={{tanni}} value={{med_result[num].単位名}}>
+      {% else%}
+      <input type="text" name={{tanni}} list={{tanni}}  class="for-qrdata cp_iptxt">
+      {% endif %}
+      
+      <datalist id={{tanni}} name={{tanni}}>
+      もしくはリストから選択
+        <select name={{tanni}}  class="for-qrdata-select">
+        {%for unit in units_list %}
+        <option value={{unit}} selected>{{unit}}
+        {% endfor %}
+        </select>
+      </datalist>
+    </div>
+
+    <div class="hide">
+      <label>補足情報</label><br>
+      {% set hosokukubunn ="hosokukubunn"+num|string  %}
+      <input type="text" name={{hosokukubunn}} value={{med_result[num].薬品補足情報}}>
+      
+    </div>
+
+    <div style="display:None;">
+      <label>薬品補足連番</label><br>
+      {% set hosokurennbann ="hosokurennbann"+num|string  %}
+      <input type="text" name={{hosokurennbann}} value={{med_result[num].薬品補足連番}} >
+      
+    </div>
+  
+ 
+
+    
+
+    
+    {% if (med_result[num+1].PR番号内連番==1) or (med_result[num].PR番号内連番 ==1 and med_result[num+1].PR番号内連番 !=2) %}
+    <div class ="how-to-use hide fix">
+    <div style="display: inline-block;">
+      <label>区分</label><br>
+
+      {% set kubun ="kubun"+num|string  %}
+      <input type="text" name={{kubun}} value={{med_result[num].剤形区分}} >
+    </div>
+
+    <div style="display: inline-block;">
+      <label>用法名称</label><br>
+      {% set youhou ="youhou"+num|string  %}
+      {%set youhou_value=med_result[num].用法名称|safe %}
+      <input type="text" name={{youhou}} value={{youhou_value}} >
+    </div>
+    
+    <div style="display: inline-block;width:20%;">
+      <label>調剤数量</label><br>
+      {% set suuryou ="suuryou"+num|string  %}
+      <input type="text" name={{suuryou}} value={{med_result[num].調剤数量}} >
+
+    </div>
+    
+    </div>
+
+    {% else %}
+    
+    <div class ="how-to-use" style="display:None;">
+    <div style="display: inline-block;">
+      <label>区分</label><br>
+
+      {% set kubun ="kubun"+num|string  %}
+      <input type="text" name={{kubun}} value={{med_result[num].区分}}>
+
+    </div>
+
+    <div style="display: inline-block;">
+      <label>用法名称</label><br>
+      {% set youhou ="youhou"+num|string  %}
+      <input type="text" name={{youhou}} value={{med_result[num].用法名称}}>
+      
+    </div>
+    
+
+    <div style="display: inline-block;width:20%;">
+      <label>調剤数量</label><br>
+      {% set suuryou ="suuryou"+num|string  %}
+      <input type="text" name={{suuryou}} value={{med_result[num].調剤数量}}>
+
+    </div>
+
+    </div>
+
+
+
+
+  
+    　
+    {% endif %}　
+  
+  </div>
+</div>
+
+
+
+    <!-- 中が入っていない時-->
+    {% else %}
+    
+    <div class="additional_box">
+      
+    <p>薬品{{num+1}}</p>
+
+    <div class="input-large">
+    <input name={{m_name}} list={{m_name}}  class="for-qrdata">
+    </div>
+
+    <div class="hide">
+      <label>RP番号</label><br>
+      {% set rp ="rp"+num|string  %}
+      <!--<p>{{pr}}</p>-->
+      <input type="text" name={{rp}} class="rp_number for-qrdata">
+    </div>
+
+    <div class="hide">
+      <label>RP番号内連番</label><br>
+      {% set prrenban ="prrenban"+num|string  %}
+      <input type="text" name={{prrenban}} class="for-qrdata">
+    </div>
+
+
+    <div style="display: inline-block;">
+      <label>用量</label><br>
+      {% set ryou ="ryou"+num|string  %}
+      <input type="text" name={{ryou}} class="for-qrdata">
+                        
+    </div>
+
+    <div style="display: inline-block;width:20%; ">
+      <label>単位名</label><br>
+      {% set tanni ="tanni"+num|string  %}
+      {% if med_result[num].単位名!=None %}
+      <input type="text" name={{tanni}} list={{tanni}}  class="for-qrdata">
+      {% else%}
+      <input type="text" name={{tanni}} list={{tanni}}  class="for-qrdata">
+      {% endif %}
+      
+      <datalist id={{tanni}} name={{tanni}}>
+      もしくはリストから選択
+        <select name={{tanni}}>
+        {%for unit in units_list %}
+        <option value={{unit}} selected>{{unit}}
+        {% endfor %}
+        </select>
+      </datalist>
+    </div>
+
+    <div class="hide">
+      <label>補足情報</label><br>
+      {% set hosokukubunn ="hosokukubunn"+num|string  %}
+      <input type="text" name={{hosokukubunn}}  class="for-qrdata">
+      
+    </div>
+
+    <div style="display:None;">
+      <label>薬品補足連番</label><br>
+      {% set hosokurennbann ="hosokurennbann"+num|string  %}
+      <input type="text" name={{hosokurennbann}}  class="for-qrdata">
+    </div>
+
+    <div class ="how-to-use hide　fix">
+    <div style="display: inline-block;">
+      <label>区分</label><br>
+      <input type="text" class="for-qrdata">
+    </div>
+
+    <div style="display: inline-block;">
+      <label>用法名称</label><br>
+      {% set youhou ="youhou"+num|string  %}
+      <input type="text" name={{youhou}}  class="for-qrdata">
+      
+    </div>
+
+    <div style="display: inline-block;width:20%;">
+      <label>調剤数量</label><br>
+      {% set suuryou ="suuryou"+num|string  %}
+      <input type="text" name={{suuryou}} >
+
+    </div>
+
+   
+</div>
+</div>
+
+    {% endif %}
+
+  {% endfor %}
+
+  <input type="button" class = "addRpBox" value="ボックスを追加する">
+<div>
+</div>
+    </div>
+    </div>
+    
+    
+    <!--いらんやつ置き場-->
+    <div style="display:None;">
+
+    </div>
+    <footer id = "footer">
+      <div class="progress_and_button">
+            <div id ="progress2" class="progressbar"></div>
+            <button type="button" id="BackButton"  class="buttonUI" >前のページへ</button>
+            <button type="submit" id="GenerateButton" formmethod="POST" class="buttonUI qrcode">バーコード生成</button>
+            <button onclick="send_text()">バーコード生成</button>
+      </div>
+    </footer>
+    </div>
+    </div>
+
+
+  </div>
+ 
+
+  <script>
+
+
+
+// かっこいいチェックボックスを貼りたい時
+// wskCheckbox.init();
+
+
+$(function() {
+// 削除ボタン
+$('<div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>').insertBefore('.prescBox');
+// 基本情報ページのチェックボックス の動的貼り付け
+$('<div class="cp_ipcheck"><input type="checkbox" class="option-input02 checkbox" name="check" /></div>').insertAfter('.box');
+// 処方ページのチェックボックス の動的貼り付け
+$('<div class="cp_ipcheck"><input type="checkbox" class="option-input02 checkbox" name="check2" /></div>').insertAfter('.prescBox');
+
+// $('<div class="RemoveButton"><input type="checkbox" class="" name="remove" /></div>').insertAfter('.prescBox');
+
+// 次へボタンは最初は使えなくする
+document.getElementById("NextButton").disabled = true;
+// QRボタンも同様
+document.getElementById("GenerateButton").disabled = true;
+// チェックボックス の数の認識（初期値）
+var size = $('.cp_ipcheck').length;
+ RpNumMax = 0;
+
+//  -------------------------Prescプログレスバーの生成---------------------------------
+// 基本情報のプログレスバー
+$('#progress1').progressbar({
+    value: 0
+  });
+//処方情報のプログレスバー
+$('#progress2').progressbar({
+    value: 0
+  });
+  $("#progress1").each(function(){
+$(this).find('div').css({ 'background': '#00078d' });});
+$("#progress2").each(function(){
+$(this).find('div').css({ 'background': '#00078d' });});
+
+// ---------------------選択されているcheckboxの数の認識----------------------
+
+ $('input[name="check"]').change(function() {
+  //  checkされている要素の数を取得
+    var r = $(this).is(':checked');
+    if(r){
+      // checkされている要素の親をハイライト
+        $(this).parents('.row-parent').addClass('highlight');
+    }
+    else{
+        $(this).parents('.row-parent').removeClass('highlight');
+    }
+
+    
+    var len = $('input[name="check"]:checked').length;
+    
+    // 基本情報のプログレスバー
+    $('#progress1').progressbar({
+    value: len,
+    max: 2
+  });
+
+  if (len == 2) {
+      document.getElementById("NextButton").disabled = false;
+    }
+    else{
+      document.getElementById("NextButton").disabled = true;
+    }
+
+
+ });
+
+
+
+// ---------------------選択されているcheckboxの数の認識、ハイライト----------------------
+$(document).on("click", 'input[name="check2"]', function(){
+
+    var r = $(this).is(':checked');
+    if(r){
+        $(this).parents('.row-parent').addClass('highlight');
+    }
+    else{
+        $(this).parents('.row-parent').removeClass('highlight');
+    }
+
+    var size = $('.cp_ipcheck').length;
+    var len = $('input[name="check2"]:checked').length;
+    
+    console.log(size);
+    $('#progress2').progressbar({
+    value: len,
+    max: size-2
+  });
+  if (len == size-2) {
+      document.getElementById("GenerateButton").disabled = false;
+    }
+    else{
+        document.getElementById("GenerateButton").disabled = true;
+    }
+});
+
+// ---------------------薬の欄の削除ボタン機能----------------------
+$(document).on("click", "#close", function(){
+  var len = $(this).parents('.rp-box').find('.row-parent').length -1;
+  console.log("length:"+len);
+  if(len == 0){
+    $(this).parents('.rp-box').fadeOut(1000, function(){
+$(this).remove();
+});
+  }
+ 
+
+
+  $(this).parents('.row-parent').fadeOut(300, function(){
+$(this).remove();
+});
+
+  var r = $(this).parents('.row-parent').children('.cp_ipcheck').is(':checked');
+    if(r){
+      var len = $('input[name="check2"]:checked').length -1;
+    }
+    else{
+    }
+
+  var size = $('.cp_ipcheck').length;
+  
+  $('#progress2').progressbar({
+    value: len,
+    max: size-2
+  });
+  // console.log("値");
+  progressValue = $('#progress2').progressbar('value') 
+  // console.log(progressValue);
+  if ($('#progress2').value == size-2) {
+      document.getElementById("GenerateButton").disabled = false;
+    }
+    else{
+        document.getElementById("GenerateButton").disabled = true;
+    }
+});
+    
+    
+    
+    // -------------------次のページボタン-------------------------
+      $('#NextButton').click(function() {
+          $('.page1').removeClass('show');
+          $('.page2').removeClass('hide');
+          $('.page1').addClass('hide');
+          $('.page2').addClass('show');
+          $('#tab1').removeClass('active');
+          $('#tab2').addClass('active');
+    
+      });
+    
+      // -------------------前のページボタン-------------------------
+      $('#BackButton').click(function() {
+         $('.page1').removeClass('hide');
+          $('.page2').removeClass('show');
+          $('.page2').addClass('hide');
+          $('.page1').addClass('show');
+          $('#tab2').removeClass('active');
+          $('#tab1').addClass('active');
+    
+      });
+    
+    // ------------------全体の薬順番入れ替え機能-------------------------
+    $('#sortdata').sortable({
+    axis: "y",
+    opacity: 0.8,
+    delay: 1000
+    });
+    // sortstopイベントをバインド
+    $('#sortdata').bind('sortstop',function(){
+      // 番号を設定している要素に対しループ処理
+     
+      $('#sortdata .rp-box').find('[name="prescBoxNum"]').each(function(idx){
+        idx = idx +1;
+        // タグ内に通し番号を設定（idxは0始まりなので+1する）
+        $(this).html("薬"+idx);
+        RpNumMax = idx;
+      });
+    });
+
+// ------------------RPBOX内の薬順番入れ替え機能-------------------------
+$(document).ready(function(){
+  $('.rp-box').each(function(idx){
+      if(!($(this).find('.row-parent').length)){
+      console.log("sakujo");
+      $(this).remove();
+    }
+  });
+
+  $('.rp-box').sortable({
+    items: '.row-parent',
+    connectWith: ".rp-box",
+    cancel: ".fix",
+    axis: "y",
+    opacity: 0.8,
+    delay: 1000
+  });
+ 
+
+  $('#sortdata').bind('click.sortable mousedown.sortable',function(ev){
+    ev.target.focus();
+});
+$('.rp-box .prescBox').each(function(idx){
+  $(this).prepend('<h3 class="hide for-qrdata">RpNum</h3>');
+
+});
+// $('.rp-box .row-parent').jrumble();
+
+$(".row-parent").mouseup(function(){
+		clearInterval(timer1);
+        console.log("xx");
+        $(".rp-box .row-parent").removeClass('buruburu');
+        // $('.rp-box .row-parent').trigger('stopRumble');
+	}).mousedown(function(){
+	    timer1 = setTimeout(function(){
+        console.log("touch");
+        $('.rp-box .row-parent').addClass('buruburu');
+        // $('.rp-box .row-parent').trigger('startRumble');
+	    },1000);
+	});
+
+$('.rp-box .row-parent').bind('touchend', function() {
+		clearInterval(timer1);
+        console.log("xx");
+        $(".rp-box .row-parent").removeClass('buruburu');
+	});
+	$('.rp-box .row-parent').bind('touchstart', function() {
+    console.log("touch");
+	    timer1 = setTimeout(function(){
+        // $(this).addClass('error');
+        $('.rp-box .row-parent').addClass('buruburu');
+	    },1000);
+	});
+
+
+    // sortstopイベントをバインド
+    $('.rp-box').bind('sortstop',function(){
+      // 番号を設定している要素に対しループ処理
+     
+      $('.rp-box .prescBox').find('[name="num_data"]').each(function(idx){
+
+        
+
+        // タグ内に通し番号を設定（idxは0始まりなので+1する）
+        idx = idx +1;
+        $(this).html("薬品"+idx);
+        var parents_id = $(this).parents(".rp-box").attr('id');
+        $(this).parents(".row-parent").attr('id', parents_id);
+        // console.log("順番変更");
+        // console.log(parents_id);
+        $(this).find(".rp_number").val(parents_id);
+
+       
+        
+
+      });
+    });
+   
+
+    $('.buttonUI').click(function() {
+      var qrdata="";
+      var qrArrayOrigin = [];
+      
+
+      
+
+    $('.for-qrdata,.for-qrdata-select option:selected').map(function() {
+    target = $(this).val();
+    target2 = $(this).text();
+    target2 = target2.trim();
+    // if(target == target2 || target == '' || target2 == ''){
+    
+    if(!($.isEmptyObject(target)) && $.isEmptyObject(target2)){
+      qrdata += ","+target;
+      console.log(target);
+      qrArrayOrigin.push(target);
+    }
+    else if(!($.isEmptyObject(target2))){
+      qrdata += ","+target2;
+      console.log(target2);
+      qrArrayOrigin.push(target2);
+    }
+    // target_sum = ","+target + ","+target2;
+    // qrdata += target_sum;
+
+    if(target == "-"|| target2=="-"){
+      $(this).addClass('error');
+      
+    }
+    $('.error').click(function(){
+      $(this).val("");
+    });
+    
+    if ($(this).hasClass('for-qrdata-alt')){
+      qrdata += "\n";
+    }
+
+});
+
+    //   console.log("click");
+    //   $('.for-qrdata').each(function(i,element){
+    //   const contents = $(this).contents();
+    //   console.dir(contents);
+    
+    //   console.log("data"+JSON.stringify(contents));
+    // });
+    qrdata = qrdata.substr(1); 
+    // console.log(qrdata);
+    // console.log(qrdata[6]);
+
+    RpNumPlace = [];
+    patientsInfo = [];
+    var AllInfo = "";
+    
+    for (var i=0; i<qrArrayOrigin.length-1; i++) {
+      if(qrArrayOrigin[i]=='RpNum'){
+        RpNumPlace.push(i);
+      }
+    }
+    console.log(RpNumPlace);
+    RpNumMax = RpNumPlace.length;
+    patientsInfo = qrArrayOrigin.slice(0,RpNumPlace[0]);
+
+
+    for (j=0;j<=patientsInfo.length-1;j++){
+      console.log(patientsInfo[j]);
+      AllInfo = AllInfo + patientsInfo[j] + "\n";
+    }
+    
+    for(i=0;i<=RpNumMax-1;i++){
+    eval("var Rp" + i + "=[];");
+    var end = RpNumPlace[i]+1;
+    eval("Rp" + i + "='"+qrArrayOrigin.slice(RpNumPlace[i],RpNumPlace[i+1])+"';");
+    k = eval("Rp" + i+";");
+    console.log(k);
+    AllInfo = AllInfo + k + "\n";
+    }
+
+    console.log(AllInfo);
+   
+    
+  });
+
+});
+
+
+
+
+// ---------------------RP番号BOX---------------------
+var rp_number=[];
+$('.rp_number').each(function(i,element){
+  rp_number[i] = $(this).val();
+
+  // console.log("RP番号"+i+"："+rp_number[i]);
+  // console.log(element);
+
+
+if(rp_number[i] == 1){
+    $(this).parents('.row-parent').addClass('rp1');
+  }
+else if(rp_number[i] == 2){
+    $(this).parents('.row-parent').addClass('rp2');
+  }
+else if(rp_number[i] == 3){
+    $(this).parents('.row-parent').addClass('rp3');
+  }
+  else if(rp_number[i] == 4){
+    $(this).parents('.row-parent').addClass('rp4');
+  }
+  else if(rp_number[i] == 5){
+    $(this).parents('.row-parent').addClass('rp5');
+  }
+});
+
+$('.rp1').wrapAll('<div class="rp-box">');
+$('.rp2').wrapAll('<div class="rp-box">');
+$('.rp3').wrapAll('<div class="rp-box">');
+$('.rp4').wrapAll('<div class="rp-box">');
+$('.rp5').wrapAll('<div class="rp-box">');
+
+// ------------------RPボックスの内容、番号--------------------------
+
+$(document).ready(function(){
+  
+$('.rp-box').each(function(i,element){
+  // rp_box_total = $('.rp-box').len();
+  num = i+1;
+  // propで属性値を変更するにあたりdiv要素が崩壊する
+  $(this).prepend('<h3 name="prescBoxNum" class="fix">薬'+num+'</h3>');
+
+  $(this).addClass('rp-box-'+num);
+  $(this).attr('id', num);
+  // $(this).val(num);
+  
+  $(this).find(".rp-number").val(num);
+  // var current_list = "{{id_22_insurance_patient_num[0]}}";
+ 
+
+
+
+  div = $(this).find('.how-to-use').clone();
+  div2=div.appendTo(this);
+  $(div2).before('<h3 class="for-qrdata hide">how-to-use</h3>');
+  div2.removeClass('hide');
+  div2.addClass('show');
+  div2.find('input').addClass('for-qrdata');
+  
+
+  $(this).append('<input type="button" class = "addPrescList fix" value="処方箋を追加する">');
+
+  
+
+    
+
+
+
+});
+});
+
+$(document).ready(function(){
+var pos = $( this ).prevAll( 'li' ).length;
+
+$('.rp-num').each(function(i,element){
+  // rp_box_total = $('.rp-box').len();
+  var pos = $( this ).prevAll( 'li' ).length;
+  
+  num = i+1;
+  $(this).prepend('<h3 name="num_data">薬品'+pos+'</h3>');
+});
+});
+
+  // ----------------------欄追加ボタン----------------------------
+// ＋ボタンで加える要素のオブジェクト
+  $(function(){
+  var data = ` 
+<div class="row-parent">
+<div class="cp_ipcheck"><input type="checkbox" class="option-input02 checkbox" name="check2" /></div>
+
+<div class="prescBox">
+
+
+
+  <div>
+    <p>薬品</p>
+    <div>
+      <input name= "" placeholder="選択肢になかった場合にのみここに記入してください。" class="for-qrdata">
+      
+    </div>
+    
+    <div class="hide">
+    
+      <label>RP番号</label><br>
+      <input type="text"class="for-qrdata">
+    </div>
+​
+    <div class="hide">
+    
+      <label>RP番号内連番</label><br>
+      <input type="text">
+    </div>
+    
+    <div style="display: inline-block;">
+      <label>用量</label><br>
+      <input type="text" class="for-qrdata">
+    </div>
+​
+    <div style="display: inline-block;width:20%; ">
+      <label>単位名</label><br>
+      <input type="text" class="for-qrdata">
+    </div>
+​
+    <div class="hide">
+      <label>補足情報</label><br>
+      <input type="text" class="for-qrdata">
+      
+    </div>
+​
+    <div style="display:None;">
+      <label>薬品補足連番</label><br>
+      <input type="text" class="for-qrdata">
+    </div> 
+  </div>
+  </div>
+
+  <div class="RemoveButton"><input type="checkbox" class="close" /><label class="label" for="close" name="remove" id="close" >×</label></div>
+</div>
+  `;
+  $(document).on("click", ".addPrescList", function(){
+    console.log("クリック");
+    $(this).parents('.rp-box').append($(data));
+    size = $('.cp_ipcheck').length;
+    console.log(size);
+  });
+  
+});
+
+
+  // ----------------------BOX追加ボタン----------------------------
+// ＋ボタンで加える要素のオブジェクト
+$(function(){
+  var data = ` 
+<div class="rp-box">
+<p></p>
+<h3>薬品リスト追加</h3>
+
+<div class ="how-to-use fix">
+      <div style="display: inline-block;">
+        <label>区分</label><br>
+  
+        <input type="text" class="for-qrdata">
+      </div>
+  
+      <div style="display: inline-block;">
+        <label>用法名称</label><br>
+  
+        <input type="text" class="for-qrdata">
+      </div>
+      
+      <div style="display: inline-block;width:20%;">
+        <label>調剤数量</label><br>
+        <input type="text"class="for-qrdata">
+  
+      </div>
+      
+      </div>
+
+<input type="button" class = "addPrescList fix" value="処方箋を追加する">
+</div>
+  `;
+  $(".addRpBox").on('click',function(){
+    console.log("クリック");
+    $('#sortdata').append($(data));
+   
+  });
+  
+});
+
+
+
+ });
+
+
+function send_text(){
+  var qrdata="";
+      var qrArrayOrigin = [];
+      
+
+      
+
+    $('.for-qrdata,.for-qrdata-select option:selected').map(function() {
+    target = $(this).val();
+    target2 = $(this).text();
+    target2 = target2.trim();
+    // if(target == target2 || target == '' || target2 == ''){
+    
+  
+
+    if(!($.isEmptyObject(target)) && $.isEmptyObject(target2)){
+      qrdata += ","+target;
+      console.log(target);
+      qrArrayOrigin.push(target);
+    }
+    else if(!($.isEmptyObject(target2))){
+      qrdata += ","+target2;
+      console.log(target2);
+      qrArrayOrigin.push(target2);
+    }
+    
+    else if($.isEmptyObject(target2) && $.isEmptyObject(target2)){
+      qrdata += ",ダミー";
+      console.log("ダミー");
+      qrArrayOrigin.push("ダミー");
+    }
+    // target_sum = ","+target + ","+target2;
+    // qrdata += target_sum;
+
+    if(target == "-"|| target2=="-"){
+      $(this).addClass('error');
+    }
+    
+    if ($(this).hasClass('for-qrdata-alt')){
+      qrdata += "\n";
+    }
+
+});
+
+    //   console.log("click");
+    //   $('.for-qrdata').each(function(i,element){
+    //   const contents = $(this).contents();
+    //   console.dir(contents);
+    
+    //   console.log("data"+JSON.stringify(contents));
+    // });
+    qrdata = qrdata.substr(1); 
+    // console.log(qrdata);
+    // console.log(qrdata[6]);
+
+    RpNumPlace = [];
+    patientsInfo = [];
+    var AllInfo = "";
+    
+    for (var i=0; i<qrArrayOrigin.length-1; i++) {
+      if(qrArrayOrigin[i]=='RpNum'){
+        RpNumPlace.push(i);
+      }
+    }
+    console.log(RpNumPlace);
+    RpNumMax = RpNumPlace.length;
+    patientsInfo = qrArrayOrigin.slice(0,RpNumPlace[0]);
+
+
+    for (j=0;j<=patientsInfo.length-1;j++){
+      console.log(patientsInfo[j]);
+      AllInfo = AllInfo + patientsInfo[j] + "\n";
+    }
+    
+    for(i=0;i<=RpNumMax-1;i++){
+    eval("var Rp" + i + "=[];");
+    var end = RpNumPlace[i]+1;
+    eval("Rp" + i + "='"+qrArrayOrigin.slice(RpNumPlace[i],RpNumPlace[i+1])+"';");
+    k = eval("Rp" + i+";");
+    console.log(k);
+    AllInfo = AllInfo + k + "\n";
+    }
+
+    console.log(AllInfo);
+
+  
+        var text1 = AllInfo;
+        var text2 = 'fugafuga'
+
+        var fData = new FormData();
+
+        fData.append('text1', text1);
+        fData.append('text2', text2);
+
+        $.ajax({
+
+            url: '/recept',   
+            type: 'POST',
+            data: fData ,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+               document.write(response); 
+                //非同期で通信成功時に読み出される [200 OK 時]
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //非同期で通信失敗時に読み出される
+                alert('Error : ' + errorThrown);
+            }
+        });
+    }
+    
+    
+ var $nav   = $('#navArea');
+  var $btn   = $('.toggle_btn');
+  var $mask  = $('#mask');
+  var open   = 'open'; // class
+  // menu open close
+
+  $btn.on( 'click', function() {
+    console.log("クリック");
+    if (!$nav.hasClass( open ) ) {
+      console.log("open");
+      $nav.addClass( open );
+    } else {
+      console.log("close");
+      $nav.removeClass( open );
+    }
+  });
+  // mask close
+  $mask.on('click', function() {
+    $nav.removeClass( open );
+  });
+    
+  
+
+
+$(window).on('load', function() {
+  var opts = $('.medicine-data-list option');
+  console.log(opts.get());
+});
+
+
+
+    </script>
+
+
+</body>
+</html>

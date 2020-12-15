@@ -1,0 +1,261 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+    <script src="static/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+    <style>
+    @media screen and (max-width: 700px) { 
+      .info_base2{
+        display:None;
+      }
+      .info_med2{
+        display:None;
+      }
+    }
+    @media screen and (min-width: 700px) { 
+      .info_base{
+        display:None;
+      }
+      .info_med{
+        display:None;
+      }
+    }
+    .vague{
+      border: 1px solid blue;
+      background-color: rgb(104, 217, 255);
+    }
+    
+    </style>
+  </head>
+
+  <body class="background">
+    <div id="navArea">
+      <a class="header" href ="/">mediLab AI</a>
+
+      <nav>
+        <div class="inner">
+          <ul>
+            <li><a href="/report">お問い合わせ</a></li>
+            <li><a href="#">設定</a></li>
+            <li><a href="#">ログアウト</a></li>
+          </ul>
+        </div>
+      </nav>
+    
+      <div class="toggle_btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    
+      <div id="mask"></div>
+    
+    </div>
+    <div class="qrpage-master">
+      
+
+
+
+
+  <div class="waku">
+    <div class="talk">
+      <figure class="talk-Limg">
+      <img src="../static/18266.jpg" alt="画像名"/>
+      <figcaption class="talk-imgname">mediRobo</figcaption>
+      </figure>
+      <div class="talk-Ltxt">
+      
+      <h2>{{msg_robot_top}}</h2>
+        <p class="talk-text">
+        現在、皆さまに適切な報連相を行うため、勉強中です・・・  <br>
+   不具合報告やその他お問い合わせは, <a href="/report">こちら </a>よりお願い致します.</p>
+      </div>
+      </div>
+ 
+  <div class="qrcode">
+      <img class="img_qrcode"　style="width: 300px" src={{path}} />
+      
+      <!--
+      <img src={{path1}} style="margin-top: 10px; vertical-align: bottom; width: 200px;margin-left: auto;margin-right: auto;"/>
+      <img src={{path1}} style="width=80%;margin-left: auto;margin-right: auto;"/>
+      -->
+
+      <form method="get" action="/" style="text-align:center;">
+        <div>
+        <button type="submit" formmethod="get" class="qrcode_button" >最初の画面に戻る</button>
+        </div>
+        </form>
+<!--         
+        <div style="text-align:center;" class="report-button">
+        <a href="/report-now">あまり読み取れなかったことを報告をし<br>最初の画面に戻る</a>
+        </div> -->
+        <div style="margin: 20px;">
+          <p style="color: gray; margin-bottom: 10px;">読み取れなかった項目を教えていただけたら幸いです。</p>
+        <div style="text-align:center;" class="report-button-box">
+          <a href="/report-name">患者氏名</a>
+        
+          <a href="/report-kana">患者氏名（かな）</a>
+        
+          <a href="/report-birth">誕生日</a>
+        </div>
+        <div style="text-align:center;" class="report-button-box">
+          <a href="/report-num">保険者番号</a>
+        
+          <a href="/report-kigo">記号番号</a>
+        
+          <a href="/report-hakkobi">発効日</a>
+        </div>
+        <div style="text-align:center;" class="report-button-box">
+          <a href="/report-gender">性別</a>
+        
+          <a href="/report-iryokikan">医療機関</a>
+        
+          <a href="/report-iyaku">医薬品名</a>
+          <a href="/report-yoho">用法容量</a>
+        </div>
+        <div style="text-align:center;" class="report-button-box">
+          <a href="/report-no-qr">QRコードが読み取れませんでした</a>
+        </div>
+
+        </div>
+</div>
+</div>
+  
+<div class="waku2">
+  <div class="info_base"> <!--スマホ用--> 
+  <div style="font-weight:bold;">患者様情報</div>
+  <div>
+      <!-- <p><span style="font-size:15px;">　保険者番号:</span><span style="font-size:25px;">{{id_22_insurance_patient_num}}</span><br><span style="font-size:15px;">　記号番号:　</span><span style="font-size:25px;">{{id_23_insurance_card_id}}・{{id_23_insurance_card_num}}</span><br><span style="color:blue;font-size:15px">　印鑑が検出出来ませんでした。ご確認ください。</span></p> -->
+      <p>
+
+      <span >　患者氏名:　　</span>{{basic_result.id_11_patient_name_kanji}}<br>
+      <span >　かな氏名:　　</span>{{basic_result.id_11_patient_name_kana}}"<br>
+      <span >　生年月日:　　</span>{{basic_result.id_13_patient_birthday_nonJAHIS}}<br>
+      <span>　保険者番号:　</span>{{basic_result.id_22_insurance_patient_num}}<br>
+      <span >　記号番号:　　</span>{{basic_result.id_23_insurance_card_id}}・{{basic_result.id_23_insurance_card_num}}<br>
+      <span >　発効日:　　　</span>{{basic_result.id_51_prescription_date_nonJAHIS}}<br>
+      {% if basic_result.id_12_patient_sex=="1" %}
+      <span>　性別:　　　　</span>男<br>
+      {% else %}
+      <span>　性別:　　　　</span>女<br>
+      {% endif %}
+      <span>　医療機関名:　</span>{{basic_result.id_1_hospital_name}}
+      </p>
+  </div><br>
+  </div>
+
+
+  <div class="info_base2"> <!--ipad用--> 
+  <div style="text-align:center;">
+  <div style="font-weight:bold;font-size:35px; ">患者様情報</div>
+  <div class="patientsInfo" style="font-size:40px;">
+      <!-- <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　保険者番号:</span><span style="font-size:25px;">{{id_22_insurance_patient_num}}</span></div> -->
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　保険者番号:</span><input value="{{basic_result.id_22_insurance_patient_num}}"></div>
+      
+      <!-- <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　記号番号:　</span><span style="font-size:23px;">{{id_23_insurance_card_id}}・{{id_23_insurance_card_num}}</span></div> -->
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　記号番号:　</span><input value="{{basic_result.id_23_insurance_card_id}}・{{basic_result.id_23_insurance_card_num}}"></div>
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　患者氏名:　</span><input value="{{basic_result.id_11_patient_name_kanji}}"></div>
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　かな氏名:　</span><input value="{{basic_result.id_11_patient_name_kana}}"></div>
+      {% if basic_result.id_12_patient_sex=="1" %}
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　性別:　　　</span><input value="男"></div>
+      {% else %}
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　性別:　　　</span><input value="女"></div>
+      {% endif %}
+      <div style="width:40%;margin-left:auto;margin-right:auto;text-align:left;"><span style="font-size:15px;">　　　　医療機関名:</span><input value="{{basic_result.id_1_hospital_name}}"></div>
+      
+  </div><br>
+  </div>
+
+  </div>
+
+
+  <div>
+  <div style="font-weight:bold;">処方情報</div>
+  {% for num in range(med_result_len) %}
+  <div class="presc-list">
+    {{med_result[num].薬品名称[-1]}}<br>
+
+    {% if med_result[num].用量=="-1"%}
+        <span style="color:blue;">{{med_result[num].用量}}{{med_result[num].単位名}}<br></span>
+        {% else %}
+        {{med_result[num].用量}}{{med_result[num].単位名}}<br>
+        {% endif %}
+
+        {% if num!= med_result_len-1%}
+        {% if med_result[num].RP番号!= med_result[num+1].RP番号%}
+
+        {% if med_result[num].用法名称== "用法未取得"%}
+        <span style="color:blue;">{{med_result[num].用法名称}}</span><br>
+        {% else %}
+        {{med_result[num].用法名称}}<br>
+            {% endif %}
+
+        {{med_result[num].調剤数量}}<br>
+            {% endif %}
+            {% else %}
+
+            {% if med_result[num].用法名称== "用法未取得"%}
+                  <span style="color:blue;">{{med_result[num].用法名称}}</span><br>
+            {% else %}
+                <span>{{med_result[num].用法名称}}</span><br>
+            {% endif %}
+            
+        {{med_result[num].調剤数量}}<br>
+    {% endif %}
+    <!-- <span style="font-size:15px;">-------------------------</span><br> -->
+    </div>
+  {% endfor %}
+  </div>
+
+  <div>
+    {% for num in range(path_input_image_len) %}
+  <div class="presc-list">
+    
+
+    <img class="prescription" src ={{path_input_image[num]}} style="width: 80vw;">
+    <!-- <span style="font-size:15px;">-------------------------</span><br> -->
+    </div>
+  {% endfor %}
+  </div>
+  
+</div>
+</div>
+
+
+
+
+<script>
+   var $nav   = $('#navArea');
+  var $btn   = $('.toggle_btn');
+  var $mask  = $('#mask');
+  var open   = 'open'; // class
+  // menu open close
+
+  $btn.on( 'click', function() {
+    console.log("クリック");
+    if (!$nav.hasClass( open ) ) {
+      console.log("open");
+      $nav.addClass( open );
+    } else {
+      console.log("close");
+      $nav.removeClass( open );
+    }
+  });
+  // mask close
+  $mask.on('click', function() {
+    $nav.removeClass( open );
+  });
+
+
+history.pushState(null, null, location.href);
+window.addEventListener('popstate', (e) => {
+  history.go(1);
+});
+  </script>
+
+</html>

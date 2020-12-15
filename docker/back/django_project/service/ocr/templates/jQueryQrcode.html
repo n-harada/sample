@@ -1,0 +1,29 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+  </head>
+  <body>
+  <div style="text-align:center;font-size:40px;">
+  </div>
+
+  
+  <div class="qrcode">
+      <!--<img src={{path1}} />-->
+      <!-- <img class="img_qrcode" src={{path1_sj}} /> -->
+      <!--
+      <img src={{path1}} style="margin-top: 10px; vertical-align: bottom; width: 200px;margin-left: auto;margin-right: auto;"/>
+      <img src={{path1}} style="width=80%;margin-left: auto;margin-right: auto;"/>
+      -->
+
+  </div>
+
+  <form method="get" action="/" style="text-align:center;">
+    <div>
+    <button type="submit" formmethod="get" class="qrcode_button" >画像送信画面へ</button>
+    </div>
+  </form>
+
+</body>
+</html>

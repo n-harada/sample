@@ -1,0 +1,141 @@
+	
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Progressbarウィジェット</title>
+<link type="text/css" rel="stylesheet"
+  href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />
+<script type="text/javascript"
+  src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript"
+  src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+  <script src="https://riversun.github.io/jsframe/jsframe.js"></script>
+ 
+  <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+ 
+
+
+</head>
+<body>
+<div class="modal">
+  <div class="modal-design">
+<h3>処理中です....</h3>
+<div class="status-before" id="status1">処方箋画像を送信中....</div>
+<div class="status-before" id="status2">文字起こし中...</div>
+<div class="status-before" id="status3">医薬品リストと照合中...</div>
+<div class="status-before" id="status4">処方箋リストの生成中...</div>
+<div class="status-before" id="status5">出力中...</div>
+
+<div class="tips">
+  <h5>薬の豆知識</h5>
+  <p id="tips"></p>
+</div>
+</div>
+</div>
+<script>
+
+
+  var data = [
+ {
+      "code": "G-010",
+      "name": "新しい薬が開発されるのに約10年かかります。",
+      "price": 200
+    },
+    {
+      "code": "G-021",
+      "name": "研究を始めて実際に創薬にまで至る薬は5000分の1と言われています。",
+      "price": 100
+    },
+    {
+      "code": "G-034",
+      "name": "食前は食事の20-30分前、食後は食事の20-30分後、食間は食事の2-3時間後を指します。",
+      "price": 180
+    },
+    {
+      "code": "G-018",
+      "name": "薬のカプセルのケースの主成分はゼラチンである。",
+      "price": 270
+    },
+    {
+      "code": "G-25",
+      "name": "薬のカプセルの中身を取り出して飲んでしまうと急激に吸収され胃腸障害が生じる可能性があります。",
+      "price": 360
+    }
+];
+
+
+
+  var count = 0;
+  function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+
+// console.log(getRandomInt(2))
+  var countup = function(){
+    count++;
+    if(count == 2){
+      tipsShow();
+      console.log("処方箋画像を送信中....");
+      $('#status1').removeClass('status-before');
+      $('#status1').addClass('status-doing');
+      
+      
+
+    }
+    else if(count == 4 - getRandomInt(2)){
+      console.log("文字起こし中...");
+      $('#status1').removeClass('status-doing');
+      $('#status1').addClass('status-done');
+      $('#status2').removeClass('status-before');
+      $('#status2').addClass('status-doing');
+
+    }
+    else if(count == 6 - getRandomInt(2)){
+      console.log("医薬品リストと照合中...");
+      $('#status1').removeClass('status-doing');
+      $('#status1').addClass('status-done');
+      $('#status2').removeClass('status-doing');
+      $('#status2').addClass('status-done');
+      $('#status3').removeClass('status-before');
+      $('#status3').addClass('status-doing');
+
+    }
+    else if(count == 8 - getRandomInt(2)){
+      console.log("処方箋リストの生成中...");
+      $('#status1').addClass('status-done');
+      $('#status2').addClass('status-done');
+      $('#status2').removeClass('status-doing');
+      $('#status3').removeClass('status-doing');
+      $('#status3').addClass('status-done');
+      $('#status4').removeClass('status-before');
+      $('#status4').addClass('status-doing');
+
+    }
+    else if(count == 11 - getRandomInt(2)){
+      console.log("出力中...");
+      $('#status1').addClass('status-done');
+      $('#status2').addClass('status-done');
+      $('#status3').addClass('status-done');
+      $('#status3').removeClass('status-doing');
+      $('#status4').removeClass('status-doing');
+      $('#status4').addClass('status-done');
+      $('#status5').removeClass('status-before');
+      $('#status5').addClass('status-doing');
+
+    }
+    setTimeout(countup, 1000);
+  } 
+  countup();
+  const tipsShow = function(){
+    $('#tips').append(data[getRandomInt(5)].name).hide().fadeIn(3000);
+
+  }
+  
+</script>
+</body>
+
+
+</html> 
+
